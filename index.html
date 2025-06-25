@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <title>AIDetect</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f4f8;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #ffffff;
+      color: #007c91;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-title img {
+      height: 65px;
+      width: auto;
+    }
+
+    .header-title h1 {
+      font-size: 28px;
+      margin: 0;
+    }
+
+    .menu-btn {
+      font-size: 26px;
+      background: none;
+      border: none;
+      color: #007c91;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 40px 30px;
+    }
+
+    .main-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    .left-box {
+      font-size: 18px;
+      background-color: #ffffff;
+      flex: 1 1 300px;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center top;
+      padding-top: 50px;
+      padding-bottom: 25px;
+      justify-content: center;
+      min-height: 300px;
+      position: relative;
+    }
+
+    .start-button {
+      width: 120px;
+      height: 50px;
+      border-radius: 8px;
+      background-color: #007c91;
+      color: white;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      position: absolute;
+      margin-top: 200px;
+    }
+
+    .start-button:hover {
+      background-color: #007c91;
+    }
+
+    .banner {
+      flex: 1 1 300px;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 300px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .banner-slide {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: all 0.8s ease;
+    }
+
+    .banner-slide.active {
+      left: 0;
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .banner-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .dots {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .dot {
+      display: inline-block;
+      height: 8px;
+      border-radius: 4px;
+      background-color: #ccc;
+      margin: 0 4px;
+      transition: all 0.3s ease;
+      width: 8px;
+    }
+
+    .dot.active {
+      width: 24px;
+      background-color: #90dcff;
+    }
+
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 10px 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      border: none;
+      border-radius: 4px;
+      user-select: none;
+      background-color: rgba(0, 0, 0, 0.3);
+      z-index: 2;
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
+    }
+
+    section {
+      margin-top: 60px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    section h2 {
+      color: #007c91;
+    }
+
+    section p {
+      line-height: 1.6;
+    }
+
+    footer {
+      background-color: #f1f1f1;
+      text-align: center;
+      padding: 12px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      height: 100vh;
+      width: 300px;
+      background-color: #ffffff;
+      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+      z-index: 1100;
+      transition: right 0.3s ease;
+      padding: 20px;
+      box-sizing: border-box;
+      font-size: 25px;
+    }
+
+    .sidebar.open {
+      right: 0;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background-color: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      display: none;
+      transition: opacity 0.3s ease;
+      z-index: 1050;
+    }
+
+    .overlay.show {
+      display: block;
+      opacity: 1;
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background-color: #ffffff;
+      color: #007c91;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 1200;
+      display: none;
+      transition: all 0.3s ease;
+      max-width: 90%;
+      width: 400px;
+    }
+
+    .popup.show {
+      display: block;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      color: #007c91;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .sidebar-button {
+      background: none;
+      border: none;
+      color: #007c91;
+      font-size: 18px;
+      padding: 10px 0;
+      text-align: left;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .privacy {
+      font-size: 12px;
+      color: #666;
+      text-align: right;
+      margin-top: 20px;
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+    }
+
+    .about-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .about-buttons button {
+      background-color: #007c91;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .main-layout {
+        flex-direction: column;
+      }
+
+      .left-box, .banner {
+        flex: 1 1 100%;
+      }
+    }
+    
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-title">
+    <img src="logo.png" alt="Logo" />
+    <h1>AIDetect</h1>
+  </div>
+  <button class="menu-btn" onclick="toggleMenu()">☰</button>
+</header>
+
+<main>
+  <div class="main-layout">
+    <div class="left-box">
+      <a class="start-button" href="subpage.html">Start</a>
+      <p>This website is not designed to provide a medically verified diagnosis and may have limited accuracy. 
+        If you are experiencing health issues or are worried about your well-being, it is strongly recommended 
+        that you consult with a licensed medical professional or a real doctor. This platform is intended solely as an additional, 
+        alternative tool for general informational purposes and should not be trusted over professional medical advice, diagnosis, or treatment.</p>
+    </div>
+
+    <div class="banner">
+      <div class="banner-slide active"><img src="banner1.jpg" alt="Banner 1"></div>
+      <div class="banner-slide"><img src="banner2.jpg" alt="Banner 2"></div>
+      <div class="banner-slide"><img src="banner3.jpg" alt="Banner 3"></div>
+      <div class="banner-slide"><img src="banner4.jpg" alt="Banner 4"></div>
+      <div class="banner-slide"><img src="banner5.jpg" alt="Banner 5"></div>
+
+      <div class="dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+
+      <button class="prev" onclick="prevSlide()">❮</button>
+      <button class="next" onclick="nextSlide()">❯</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+  <div class="sidebar" id="sidebar">
+    <h2>Menu</h2>
+    <button class="sidebar-button" onclick="toggleAccount()">Account</button>
+    <button class="sidebar-button" onclick="alert('Settings not yet implemented.')">Settings</button>
+    <button class="sidebar-button" onclick="toggleAboutPopup()">About Us</button>
+    <button class="sidebar-button" onclick="toggleFeedback()">Feedback</button>
+    <button class="sidebar-button privacy" onclick="togglePrivacyPopup()">Privacy Policy</button>
+  </div>
+
+  <div class="popup" id="accountPopup">
+    <button class="close-btn" onclick="closeAll()">&times;</button>
+    <h2>ACCOUNT</h2>
+    <p>STILL IN DEVELOPMENT!!</p>
+  </div>
+
+  <div class="popup" id="feedbackPopup">
+    <button class="close-btn" onclick="closeAll()">&times;</button>
+    <h2>Feedback</h2>
+    <textarea rows="5" style="width: 100%; padding: 10px; box-sizing: border-box;"></textarea>
+    <button style="margin-top: 10px; background: #007c91; color: white; border: none; padding: 10px 20px; border-radius: 6px;">Send</button>
+  </div>
+
+  <div class="popup" id="aboutPopup">
+    <button class="close-btn" onclick="closeAll()">&times;</button>
+    <h2>About Us</h2>
+    <div class="about-buttons">
+      <button onclick="scrollToSection('introduction')">Introduction</button>
+      <button onclick="scrollToSection('objectives')">Objectives</button>
+      <button onclick="scrollToSection('process')">Process</button>
+      <button onclick="scrollToSection('how')">How it works</button>
+      <button onclick="scrollToSection('developers')">Developers</button>
+    </div>
+  </div>
+
+  <div class="popup" id="privacyPopup">
+    <button class="close-btn" onclick="closeAll()">&times;</button>
+    <h2>Privacy Policy</h2>
+    <p>STILL IN DEVELOPMENT!!</p>
+  </div>
+
+  <section id="about">
+    <h2 id="introduction">Introduction</h2>
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+      Ullam ab assumenda illo vel. Autem ab ducimus sed quisquam harum atque fuga delectus culpa id maxime, 
+      vel recusandae officia iure nemo?</p>
+    
+    <h2 id="process">Process</h2>
+    <p>1. Read and go through the website’s instructions and details</p>
+    <p>2. Press the "Start" button</p>
+    <p>3. Patients are then required to fill out the information as requested</p>
+    <p>4. Check the filled information and press submit</p>
+    <p>5. The AI will then analyze the information given</p>
+    <p>6. Results will be shown after the AI finishes analyzing</p>
+
+
+    <h2 id="objectives">Objectives</h2>
+    <p>1. Provide easier access to diagnosis</p>
+    <p>2. Provide an alternative method instead of going to the hospital</p>
+    <p>3. Reduce congestion in hospitals</p>
+    <p>4. Prevent neglect of health</p>
+
+    <h2 id="how">How it works</h2>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+      Quis quas reprehenderit nemo deserunt quod quisquam esse temporibus odit consequatur amet nesciunt, 
+      doloremque libero blanditiis voluptates molestias? Animi fugit totam iusto.</p>
+
+    <h2 id="developers">Developers</h2>
+    <p>Nattanan Singtoroj (Main Inventor and Project Head)</p>
+    <p>Khunut Thewarakphithak (Main Web-developer and Co-researcher)</p>
+    <p>Paulprathai Chandacham (Main Illustrator and Co-researcher)</p>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 AID Research Project
+</footer>
+
+<script>
+  let slideIndex = 0;
+  const slides = document.querySelectorAll('.banner-slide');
+  const dots = document.querySelectorAll('.dot');
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.remove('active');
+      dots[i].classList.remove('active');
+    });
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+  }
+
+  function nextSlide() {
+    slideIndex = (slideIndex + 1) % slides.length;
+    showSlide(slideIndex);
+  }
+
+  function prevSlide() {
+    slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+    showSlide(slideIndex);
+  }
+
+  setInterval(nextSlide, 4000);
+
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  const popup = document.getElementById("accountPopup");
+  const privacyPopup = document.getElementById("privacyPopup");
+  const feedbackPopup = document.getElementById("feedbackPopup");
+  const aboutPopup = document.getElementById("aboutPopup");
+
+  function toggleMenu() {
+    if (sidebar.classList.contains("open")) {
+      closeAll();
+    } else {
+      sidebar.classList.add("open");
+      showOverlay();
+    }
+  }
+
+  function togglePrivacyPopup() {
+    privacyPopup.classList.add("show");
+    showOverlay();
+  }
+
+  function toggleAccount() {
+    popup.classList.add("show");
+    showOverlay();
+  }
+
+  function toggleFeedback() {
+    feedbackPopup.classList.add("show");
+    showOverlay();
+  }
+
+  function toggleAboutPopup() {
+    aboutPopup.classList.add("show");
+    showOverlay();
+  }
+
+  function scrollToSection(id) {
+    closeAll();
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function showOverlay() {
+    overlay.style.display = "block";
+    requestAnimationFrame(() => {
+      overlay.classList.add("show");
+    });
+  }
+
+  function closeAll() {
+    sidebar.classList.remove("open");
+    popup.classList.remove("show");
+    feedbackPopup.classList.remove("show");
+    aboutPopup.classList.remove("show");
+    privacyPopup.classList.remove("show");
+    overlay.classList.remove("show");
+    overlay.addEventListener("transitionend", () => {
+      if (!overlay.classList.contains("show")) {
+        overlay.style.display = "none";
+      }
+    }, { once: true });
+  }
+</script>
+
+</body>
+</html>
