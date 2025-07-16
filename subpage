@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AIDetect - Page 2</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #007c91;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007c91;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+
+    .back-button:hover {
+      background-color: #005f70;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Welcome to AIDetect - Page 2</h1>
+  <p>This is where you can add forms, AI input, results, or any other content.</p>
+
+  <a class="back-button" href="index.html">← Back to Home</a>
+
+</body>
+</html>
