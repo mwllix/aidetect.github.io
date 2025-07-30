@@ -5,7 +5,11 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+# Load SVC model
 model = pickle.load(open("svc.pkl", "rb"))
+
+# ✅ Load label encoder
+le = pickle.load(open("le.pkl", "rb"))
 
 bp_map = {"95/80": 0, "120/80": 1, "130/80": 2, "140/80": 3, "145/80": 4}
 gender_map = {"Male": 0, "Female": 1, "Both": 2}
@@ -32,8 +36,13 @@ def predict():
         yn_map.get(data["cold"]),
         yn_map.get(data["thirst"]),
     ]
-    prediction = model.predict([input_vector])[0]
-    return jsonify({"prediction": prediction})
+    
+    # Predict disease label
+    predicted_label = model.predict([input_vector])[0]
+    
+    predicted_disease = le.inverse_transform([predicted_label])[0]
+
+    return jsonify({"prediction": predicted_disease})
 
 if __name__ == "__main__":
     app.run(debug=True)
