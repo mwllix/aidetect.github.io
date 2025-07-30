@@ -1,168 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AIDetect - Questionnaire</title>
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f9fcff;
-      color: #333;
-      padding: 40px;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>AIDetect - Questionnaire</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9fcff;
+            color: #333;
+            padding: 40px;
+            margin: 0; /* เพิ่ม margin: 0 เพื่อให้ body ไม่มีช่องว่าง */
+        }
 
-    h1 {
-      color: #007c91;
-    }
+        h1 {
+            color: #007c91;
+            text-align: center; /* จัดกึ่งกลางหัวข้อ */
+            margin-bottom: 30px;
+        }
 
-    form {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      max-width: 600px;
-      margin: auto;
-    }
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: auto;
+        }
 
-    label {
-      display: block;
-      margin-top: 20px;
-      font-weight: bold;
-    }
+        label {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+        }
 
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box; /* ทำให้ padding ไม่เพิ่มขนาดของ input */
+        }
 
-    button {
-      margin-top: 30px;
-      padding: 12px 24px;
-      background-color: #007c91;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+        button {
+            margin-top: 30px;
+            padding: 12px 24px;
+            background-color: #007c91;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%; /* ทำให้ปุ่มเต็มความกว้าง */
+        }
 
-    button:hover {
-      background-color: #005f73;
-    }
-  </style>
+        button:hover {
+            background-color: #005f73;
+        }
+
+        /* Styles for the custom modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content h2 {
+            color: #007c91;
+            margin-top: 0;
+        }
+
+        .modal-content p {
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+        .modal-content button {
+            background-color: #007c91;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            width: auto; /* ให้ปุ่มมีขนาดตามเนื้อหา */
+        }
+
+        .modal-content button:hover {
+            background-color: #005f73;
+        }
+    </style>
 </head>
 <body>
 
 <h1>Health Information Form</h1>
 
 <form onsubmit="submitForm(event)">
-  <label for="age">Age:</label>
-  <input type="number" min="0" id="age" name="age" required />
+    <label for="age">Age:</label>
+    <input type="number" min="0" id="age" name="age" required />
 
-  <label for="bp">Blood Pressure:</label>
-  <select id="bp" name="bp" required>
-  <option value="" disabled selected>Select level</option>
-  <option value="95/80">95/80</option>
-  <option value="120/80">120/80</option>
-  <option value="130/80">130/80</option>
-  <option value="140/80">140/80</option>  
-  <option value="145/80">145/80</option>
-  </select>
+    <label for="bp">Blood Pressure:</label>
+    <select id="bp" name="bp" required>
+        <option value="" disabled selected>Select level</option>
+        <option value="95/80">95/80</option>
+        <option value="120/80">120/80</option>
+        <option value="130/80">130/80</option>
+        <option value="140/80">140/80</option>
+        <option value="145/80">145/80</option>
+    </select>
 
-  <label for="massBefore">Mass Before 1 Week (kg):</label>
-  <input type="number" id="massBefore" name="massBefore" required />
+    <label for="massBefore">Mass Before 1 Week (kg):</label>
+    <input type="number" id="massBefore" name="massBefore" required />
 
-  <label for="massAfter">Mass After 1 Week (kg):</label>
-  <input type="number" id="massAfter" name="massAfter" required />
+    <label for="massAfter">Mass After 1 Week (kg):</label>
+    <input type="number" id="massAfter" name="massAfter" required />
 
-  <label for="urine">Urine Per Day (mL):</label>
-  <input type="number" id="urine" name="urine" required />
+    <label for="urine">Urine Per Day (mL):</label>
+    <input type="number" id="urine" name="urine" required />
 
-  <label for="water">Water Intake Per Day (mL):</label>
-  <input type="number" id="water" name="water" required />
+    <label for="water">Water Intake Per Day (mL):</label>
+    <input type="number" id="water" name="water" required />
 
-  <label for="gender">Risk Gender:</label>
-  <select id="gender" name="gender">
-    <option value="Male">Male</option>
-    <option value="Female">Female</option>
-    <option value="Both">Both</option>
-  </select>
+    <label for="gender">Risk Gender:</label>
+    <select id="gender" name="gender">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Both">Both</option>
+    </select>
 
-  <label for="fatigue">Fatigue:</label>
-  <select id="fatigue" name="fatigue">
-    <option value="Yes">Yes</option>
-    <option value="No">No</option>
-  </select>
+    <label for="fatigue">Fatigue:</label>
+    <select id="fatigue" name="fatigue">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+    </select>
 
-  <label for="edema">Edema:</label>
-  <select id="edema" name="edema">
-    <option value="Yes">Yes</option>
-    <option value="No">No</option>
-  </select>
+    <label for="edema">Edema:</label>
+    <select id="edema" name="edema">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+    </select>
 
-  <label for="confusion">Confusion:</label>
-  <select id="confusion" name="confusion">
-    <option value="Yes">Yes</option>
-    <option value="No">No</option>
-  </select>
+    <label for="confusion">Confusion:</label>
+    <select id="confusion" name="confusion">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+    </select>
 
-  <label for="cold">Common Cold:</label>
-  <select id="cold" name="cold">
-    <option value="Yes">Yes</option>
-    <option value="No">No</option>
-  </select>
+    <label for="cold">Common Cold:</label>
+    <select id="cold" name="cold">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+    </select>
 
-  <label for="thirst">Thirst:</label>
-  <select id="thirst" name="thirst">
-    <option value="Yes">Yes</option>
-    <option value="No">No</option>
-  </select>
+    <label for="thirst">Thirst:</label>
+    <select id="thirst" name="thirst">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+    </select>
 
-  <button type="submit">Submit</button>
+    <button type="submit">Submit</button>
 </form>
 
+<!-- Custom Modal for displaying results/errors -->
+<div id="resultModal" class="modal-overlay">
+    <div class="modal-content">
+        <h2 id="modalTitle"></h2>
+        <p id="modalMessage"></p>
+        <button onclick="closeModal()">OK</button>
+    </div>
+</div>
+
 <script>
-  async function submitForm(event) {
-    event.preventDefault();
-
-    const data = {
-      age: parseInt(document.getElementById("age").value),
-      bp: document.getElementById("bp").value,
-      massBefore: parseFloat(document.getElementById("massBefore").value),
-      massAfter: parseFloat(document.getElementById("massAfter").value),
-      urine: parseFloat(document.getElementById("urine").value),
-      water: parseFloat(document.getElementById("water").value),
-      gender: document.getElementById("gender").value,
-      fatigue: document.getElementById("fatigue").value,
-      edema: document.getElementById("edema").value,
-      confusion: document.getElementById("confusion").value,
-      cold: document.getElementById("cold").value,
-      thirst: document.getElementById("thirst").value
-    };
-
-    try {
-      const response = await fetch("https://aidetect-github-io.onrender.com/predict", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      });
-
-      const result = await response.json();
-
-      // แสดงผลบนหน้าเว็บ
-      alert("ผลการวิเคราะห์: " + result.prediction);
-    } catch (error) {
-      alert("เกิดข้อผิดพลาด: " + error.message);
+    // Function to show the custom modal
+    function showModal(title, message) {
+        const modal = document.getElementById("resultModal");
+        document.getElementById("modalTitle").innerText = title;
+        document.getElementById("modalMessage").innerText = message;
+        modal.classList.add("show");
     }
-  }
-</script>
 
+    // Function to close the custom modal
+    function closeModal() {
+        const modal = document.getElementById("resultModal");
+        modal.classList.remove("show");
+    }
+
+    async function submitForm(event) {
+        event.preventDefault();
+
+        const data = {
+            age: parseInt(document.getElementById("age").value),
+            bp: document.getElementById("bp").value,
+            // แก้ไขชื่อฟิลด์ให้ตรงกับ app.py (massBefore, massAfter)
+            massBefore: parseFloat(document.getElementById("massBefore").value),
+            massAfter: parseFloat(document.getElementById("massAfter").value),
+            urine: parseFloat(document.getElementById("urine").value),
+            water: parseFloat(document.getElementById("water").value),
+            gender: document.getElementById("gender").value,
+            fatigue: document.getElementById("fatigue").value,
+            edema: document.getElementById("edema").value,
+            confusion: document.getElementById("confusion").value,
+            cold: document.getElementById("cold").value,
+            thirst: document.getElementById("thirst").value
+        };
+
+        try {
+            const response = await fetch("https://aidetect-github-io.onrender.com/predict", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text(); 
+                throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+            }
+
+            const result = await response.json();
+
+            showModal("ผลการวิเคราะห์", "โรคที่ทำนาย: " + result.prediction);
+
+        } catch (error) {
+            showModal("เกิดข้อผิดพลาด", "ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์หรือข้อมูลไม่ถูกต้อง: " + error.message);
+            console.error("Error during prediction:", error); // Log error to console for debugging
+        }
+    }
+</script>
 
 </body>
 </html>
