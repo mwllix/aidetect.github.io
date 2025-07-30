@@ -9,7 +9,7 @@ CORS(app)
 model = pickle.load(open("svc.pkl", "rb"))
 
 # ✅ Load label encoder
-le = pickle.load(open("le.pkl", "rb"))
+le = pickle.load(open("label_encoder.pkl", "rb"))
 
 bp_map = {"95/80": 0, "120/80": 1, "130/80": 2, "140/80": 3, "145/80": 4}
 gender_map = {"Male": 0, "Female": 1, "Both": 2}
