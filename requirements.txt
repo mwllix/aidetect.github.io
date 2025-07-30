@@ -10,7 +10,7 @@ joblib==1.5.1
 MarkupSafe==3.0.2
 numpy==2.2.5
 opencv-python==4.11.0.86
-scikit-learn==1.7.1
+scikit-learn==1.6.1
 scipy==1.16.1
 setuptools==80.4.0
 threadpoolctl==3.6.0
