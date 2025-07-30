@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AIDetect - Questionnaire</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f9fcff;
+      color: #333;
+      padding: 40px;
+    }
+
+    h1 {
+      color: #007c91;
+    }
+
+    form {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 12px 24px;
+      background-color: #007c91;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005f73;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Health Information Form</h1>
+
+<form action="result.html" method="post">
+  <label for="age">Age:</label>
+  <input type="number" id="age" name="age" required />
+
+  <label for="bp">Blood Pressure:</label>
+  <input type="text" id="bp" name="bp" required />
+
+  <label for="massBefore">Mass Before 1 Week (kg):</label>
+  <input type="number" id="massBefore" name="massBefore" required />
+
+  <label for="massAfter">Mass After 1 Week (kg):</label>
+  <input type="number" id="massAfter" name="massAfter" required />
+
+  <label for="urine">Urine Per Day (mL):</label>
+  <input type="number" id="urine" name="urine" required />
+
+  <label for="water">Water Intake Per Day (mL):</label>
+  <input type="number" id="water" name="water" required />
+
+  <label for="gender">Risk Gender:</label>
+  <select id="gender" name="gender">
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+    <option value="Both">Both</option>
+  </select>
+
+  <label for="fatigue">Fatigue:</label>
+  <select id="fatigue" name="fatigue">
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+  </select>
+
+  <label for="edema">Edema:</label>
+  <select id="edema" name="edema">
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+  </select>
+
+  <label for="confusion">Confusion:</label>
+  <select id="confusion" name="confusion">
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+  </select>
+
+  <label for="cold">Common Cold:</label>
+  <select id="cold" name="cold">
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+  </select>
+
+  <label for="thirst">Thirst:</label>
+  <select id="thirst" name="thirst">
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+  </select>
+
+  <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>
