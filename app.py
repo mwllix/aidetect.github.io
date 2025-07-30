@@ -1,11 +1,11 @@
 from flask import Flask, request, jsonify
-import joblib
+import pickle
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
-model = joblib.load("svc.pkl")
+model = pickle.load(open("svc.pkl", "rb"))
 
 bp_map = {"95/80": 0, "120/80": 1, "130/80": 2, "140/80": 3, "145/80": 4}
 gender_map = {"Male": 0, "Female": 1, "Both": 2}
