@@ -10,12 +10,12 @@
             background-color: #f9fcff;
             color: #333;
             padding: 40px;
-            margin: 0; /* เพิ่ม margin: 0 เพื่อให้ body ไม่มีช่องว่าง */
+            margin: 0;
         }
 
         h1 {
             color: #007c91;
-            text-align: center; /* จัดกึ่งกลางหัวข้อ */
+            text-align: center; 
             margin-bottom: 30px;
         }
 
@@ -40,7 +40,7 @@
             margin-top: 5px;
             border-radius: 6px;
             border: 1px solid #ccc;
-            box-sizing: border-box; /* ทำให้ padding ไม่เพิ่มขนาดของ input */
+            box-sizing: border-box; 
         }
 
         button {
@@ -52,14 +52,13 @@
             border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
-            width: 100%; /* ทำให้ปุ่มเต็มความกว้าง */
+            width: 100%; 
         }
 
         button:hover {
             background-color: #005f73;
         }
 
-        /* Styles for the custom modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -115,7 +114,7 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 16px;
-            width: auto; /* ให้ปุ่มมีขนาดตามเนื้อหา */
+            width: auto;
         }
 
         .modal-content button:hover {
@@ -151,7 +150,7 @@
         <option value="145/80">145/80</option>
     </select>
 
-    <label for="massBefore">Mass Before 1 Week (kg):</label>
+    <label for="massBefore">Mass Before(kg):</label>
     <input type="number" id="massBefore" name="massBefore" required />
 
     <label for="massAfter">Mass After 1 Week (kg):</label>
