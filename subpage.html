@@ -111,14 +111,7 @@
 <form onsubmit="submitForm(event)">
     <div class="feature-group">
         <h3>Age</h3>
-        <label><input type="checkbox" name="age" value="0-1"> 0-1</label>
-        <label><input type="checkbox" name="age" value="5-15"> 5-15</label>
-        <label><input type="checkbox" name="age" value="10-20"> 10-20</label>
-        <label><input type="checkbox" name="age" value="40+"> 40+</label>
-        <label><input type="checkbox" name="age" value="45+"> 45+</label>
-        <label><input type="checkbox" name="age" value="50+"> 50+</label>
-        <label><input type="checkbox" name="age" value="60+"> 60+</label>
-        <label><input type="checkbox" name="age" value="65+"> 65+</label>
+        <input type="number" id="age" name="age" required min="0" max="120">
     </div>
 
     <div class="feature-group">
