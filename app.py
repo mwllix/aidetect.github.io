@@ -44,6 +44,7 @@ def predict():
         ]
 
         # สร้าง list ของค่าจาก data ที่ได้รับมาตามลำดับของ expected_columns
+        # ถ้าไม่มีฟิลด์ใน data.get จะคืนค่า 0 เป็นค่าเริ่มต้น
         input_vector = [data.get(col, 0) for col in expected_columns]
         
         # ตรวจสอบว่ามีฟิลด์ 'age' ในข้อมูลที่ได้รับหรือไม่
