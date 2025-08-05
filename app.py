@@ -3,6 +3,7 @@ import pickle
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pandas as pd
+import numpy as np
 
 app = Flask(__name__)
 CORS(app)
@@ -28,7 +29,6 @@ def predict():
 
         # กำหนดรายการคอลัมน์ทั้งหมดที่โมเดลคาดหวัง (62 คอลัมน์)
         expected_columns = [
-            "age",
             "0-1", "5-15", "10-20", "40+", "45+", "50+", "60+", "65+",
             "<500", "<800", "350-550", "800-2000", "2000-3000", ">2000", ">3000",
             ">=18.5", ">=25", "N/a", "<=2700", ">=3700", "120/80", ">130/80",
@@ -47,10 +47,6 @@ def predict():
         # ถ้าไม่มีฟิลด์ใน data.get จะคืนค่า 0 เป็นค่าเริ่มต้น
         input_vector = [data.get(col, 0) for col in expected_columns]
         
-        # ตรวจสอบว่ามีฟิลด์ 'age' ในข้อมูลที่ได้รับหรือไม่
-        if "age" not in data:
-            return jsonify({"error": "Missing required field: age"}), 400
-
         # ทำนายโรค
         predicted_label = model.predict([input_vector])[0]
         predicted_disease = le.inverse_transform([predicted_label])[0]
