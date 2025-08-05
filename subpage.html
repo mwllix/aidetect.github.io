@@ -97,7 +97,7 @@
 </head>
 <body>
 
-<h1>Health Information Form (62 Features)</h1>
+<h1>Health Information</h1>
 
 <form onsubmit="submitForm(event)">
     <div class="feature-group">
@@ -266,10 +266,10 @@
 
             const result = await response.json();
 
-            showModal("ผลการวิเคราะห์", "โรคที่ทำนาย: " + result.prediction);
+            showModal("Analysis Result", "Predicted Disease: " + result.prediction);
 
         } catch (error) {
-            showModal("เกิดข้อผิดพลาด", "ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์หรือข้อมูลไม่ถูกต้อง: " + error.message);
+            showModal("Error", "Could not connect to the server or invalid data: " + error.message);
             console.error("Error during prediction:", error);
         }
     }
