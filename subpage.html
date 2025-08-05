@@ -4,331 +4,229 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>AIDetect - Questionnaire</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Custom styles for Inter font and general body */
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: #f9fcff;
             color: #333;
-            padding: 40px;
-            margin: 0;
-        }
-
-        h1 {
-            color: #007c91;
-            text-align: center; 
-            margin-bottom: 30px;
-        }
-
-        form {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            max-width: 600px;
-            margin: auto;
-        }
-
-        label {
-            display: block;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        input[type="text"], input[type="number"], select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-        
-        /* Styles for checkboxes */
-        .checkbox-group {
-            margin-top: 15px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px; /* Spacing between checkboxes */
-        }
-
-        .checkbox-group div {
-            display: flex;
-            align-items: center;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: auto; /* Allow checkbox to be its natural size */
-            margin-right: 8px;
-        }
-
-        .checkbox-group label {
-            margin: 0; /* Remove top margin for labels inside checkbox group */
-            font-weight: normal; /* Normal font weight for checkbox labels */
-            display: inline-block; /* Allow labels to sit next to checkboxes */
-        }
-        
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            box-sizing: border-box; 
-        }
-
-        button {
-            margin-top: 30px;
-            padding: 12px 24px;
-            background-color: #007c91;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%; 
-        }
-
-        button:hover {
-            background-color: #005f73;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-overlay.show .modal-content {
-            transform: scale(1);
-        }
-
-        .modal-content h2 {
-            color: #007c91;
-            margin-top: 0;
-        }
-
-        .modal-content p {
-            font-size: 18px;
-            margin-bottom: 25px;
-        }
-
-        .modal-content button {
-            background-color: #007c91;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            width: auto;
-        }
-
-        .modal-content button:hover {
-            background-color: #005f73;
         }
     </style>
 </head>
-<body>
+<body class="p-4 sm:p-8 md:p-10 lg:p-12">
 
-<h1>Health Information Form</h1>
+    <h1 class="text-3xl sm:text-4xl font-bold text-[#007c91] text-center mb-8">Health Information Form</h1>
 
-<form onsubmit="submitForm(event)">
-    <label for="age">Age:</label>
-    <select id="age" name="age" required>
-        <option value="" disabled selected>Select age</option>
-        <option value="0-1">0-1</option>
-        <option value="5-15">5-15</option>
-        <option value="10-20">10-20</option>
-        <option value="40+">40+</option>
-        <option value="45+">45+</option>
-        <option value="50+">50+</option>
-        <option value="60+">60+</option>
-        <option value="45+">65+</option>
-    </select>
-
-    <label for="bp">Blood Pressure:</label>
-    <select id="bp" name="bp" required>
-        <option value="" disabled selected>Select level</option>
-        <option value="95/80">95/80</option>
-        <option value="120/80">120/80</option>
-        <option value="130/80">130/80</option>
-        <option value="140/80">140/80</option>
-        <option value="145/80">145/80</option>
-    </select>
-    
-    <label>Mass Before(select all applicable initial states):</label>
-    <div class="checkbox-group">
-        <div>
-            <input type="checkbox" id="massBefore" name="massBefore" value="Mass">
-            <label for="Mass">Mass</label>
+    <form onsubmit="submitForm(event)" class="bg-white p-6 sm:p-8 rounded-xl shadow-lg max-w-md mx-auto">
+        <div class="mb-4">
+            <label for="age" class="block text-gray-700 font-semibold mb-2">Age:</label>
+            <select id="age" name="age" required
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007c91]">
+                <option value="" disabled selected>Select age</option>
+                <option value="0">0-1</option>
+                <option value="5">5-15</option>
+                <option value="10">10-20</option>
+                <option value="40">40+</option>
+                <option value="45">45+</option>
+                <option value="50">50+</option>
+                <option value="60">60+</option>
+                <option value="65">65+</option>
+            </select>
         </div>
-        <div>
-            <input type="checkbox" id="massBefore" name="massBefore" value="Negligible">
-            <label for="Negligible">Negligible</label>
+
+        <div class="mb-4">
+            <label for="bp" class="block text-gray-700 font-semibold mb-2">Blood Pressure:</label>
+            <select id="bp" name="bp" required
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007c91]">
+                <option value="" disabled selected>Select level</option>
+                <option value="95/80">95/80</option>
+                <option value="120/80">120/80</option>
+                <option value="130/80">130/80</option>
+                <option value="140/80">140/80</option>
+                <option value="145/80">145/80</option>
+            </select>
         </div>
-        <div>
-            <input type="checkbox" id="massBefore" name="massBefore" value="Overweight">
-            <label for="Overweight">Overweight</label>
+
+        <div class="mb-4">
+            <label for="massBefore" class="block text-gray-700 font-semibold mb-2">Mass Before (kg):</label>
+            <input type="number" id="massBefore" name="massBefore" required step="0.1"
+                   class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007c91]"
+                   placeholder="e.g., 70.5"/>
+        </div>
+
+        <div class="mb-4">
+            <label for="massAfter" class="block text-gray-700 font-semibold mb-2">Mass After 1 Week (kg):</label>
+            <input type="number" id="massAfter" name="massAfter" required step="0.1"
+                   class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007c91]"
+                   placeholder="e.g., 69.8"/>
+        </div>
+
+        <div class="mb-4">
+            <label for="urine" class="block text-gray-700 font-semibold mb-2">Urine Per Day (mL):</label>
+            <input type="number" id="urine" name="urine" required step="1"
+                   class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007c91]"
+                   placeholder="e.g., 1500"/>
+        </div>
+
+        <div class="mb-4">
+            <label for="water" class="block text-gray-700 font-semibold mb-2">Water Intake Per Day (mL):</label>
+            <input type="number" id="water" name="water" required step="1"
+                   class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007c91]"
+                   placeholder="e.g., 2000"/>
+        </div>
+
+        <div class="mb-4">
+            <label for="gender" class="block text-gray-700 font-semibold mb-2">Risk Gender:</label>
+            <select id="gender" name="gender"
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007c91]">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Both">Both</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="fatigue" class="block text-gray-700 font-semibold mb-2">Fatigue:</label>
+            <select id="fatigue" name="fatigue"
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007c91]">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="edema" class="block text-gray-700 font-semibold mb-2">Edema:</label>
+            <select id="edema" name="edema"
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007c91]">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="confusion" class="block text-gray-700 font-semibold mb-2">Confusion:</label>
+            <select id="confusion" name="confusion"
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007c91]">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="cold" class="block text-gray-700 font-semibold mb-2">Common Cold:</label>
+            <select id="cold" name="cold"
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007c91]">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+
+        <div class="mb-6">
+            <label for="thirst" class="block text-gray-700 font-semibold mb-2">Thirst:</label>
+            <select id="thirst" name="thirst"
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007c91]">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+
+        <button type="submit"
+                class="w-full py-3 px-6 bg-[#007c91] text-white font-semibold rounded-lg shadow-md hover:bg-[#005f73] transition duration-300 ease-in-out">
+            Submit
+        </button>
+    </form>
+
+    <!-- Custom Modal for displaying results/errors -->
+    <div id="resultModal" class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-10 opacity-0 invisible transition-opacity duration-300 ease-in-out">
+        <div class="bg-white p-8 rounded-xl shadow-2xl text-center max-w-sm w-11/12 transform scale-90 transition-transform duration-300 ease-in-out">
+            <h2 id="modalTitle" class="text-2xl font-bold text-[#007c91] mb-4"></h2>
+            <p id="modalMessage" class="text-lg text-gray-800 mb-6"></p>
+            <button onclick="closeModal()"
+                    class="px-6 py-2 bg-[#007c91] text-white font-semibold rounded-lg hover:bg-[#005f73] transition duration-300 ease-in-out">
+                OK
+            </button>
         </div>
     </div>
 
+    <script>
+        // Define your API URL here
+        const BASE_API_URL = "https://aidetect-github-io.onrender.com/predict";
 
-    <label for="massAfter">Mass After 1 Week (kg):</label>
-    <select id="massAfter" name="massAfter" required>
-        <option value="" disabled selected>Select</option>
-        <option value="M7">+7 Kg</option>
-        <option value="M7M10">+7 to +10 Kg</option>
-        <option value="M_0.5M_1">-0.5 to -1 Kg</option>
-        <option value="M_1">-1 Kg</option>
-        <option value="M_5">-5 Kg</option>
-        <option value="M_10">-10 Kg</option>
-        <option value="M_decrease">Mass decrease</option>
-        <option value="M_notchange">Not change</option>
-        <option value="Negligible">Negligible</option>
-    </select>
-    
-    <label for="massAfter">Mass After 1 Week (kg):</label>
-    <input type="number" id="massAfter" name="massAfter" required />
+        // Function to show the custom modal
+        function showModal(title, message) {
+            const modal = document.getElementById("resultModal");
+            const modalContent = modal.querySelector(".bg-white"); // Select the modal content for transform
+            document.getElementById("modalTitle").innerText = title;
+            document.getElementById("modalMessage").innerText = message;
+            modal.classList.add("opacity-100", "visible");
+            modalContent.classList.add("scale-100"); // Apply scale for animation
+        }
 
-    <label for="urine">Urine Per Day (mL):</label>
-    <input type="number" id="urine" name="urine" required />
+        // Function to close the custom modal
+        function closeModal() {
+            const modal = document.getElementById("resultModal");
+            const modalContent = modal.querySelector(".bg-white"); // Select the modal content for transform
+            modal.classList.remove("opacity-100", "visible");
+            modalContent.classList.remove("scale-100"); // Remove scale for animation
+        }
 
-    <label for="water">Water Intake Per Day (mL):</label>
-    <input type="number" id="water" name="water" required />
+        async function submitForm(event) {
+            event.preventDefault();
 
-    <label for="gender">Risk Gender:</label>
-    <select id="gender" name="gender">
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Both">Both</option>
-    </select>
+            // Collect data from form inputs as strings initially
+            const data = {
+                age: document.getElementById("age").value,
+                bp: document.getElementById("bp").value,
+                massBefore: document.getElementById("massBefore").value,
+                massAfter: document.getElementById("massAfter").value,
+                urine: document.getElementById("urine").value,
+                water: document.getElementById("water").value,
+                gender: document.getElementById("gender").value,
+                fatigue: document.getElementById("fatigue").value,
+                edema: document.getElementById("edema").value,
+                confusion: document.getElementById("confusion").value,
+                cold: document.getElementById("cold").value,
+                thirst: document.getElementById("thirst").value
+            };
 
-    <label for="fatigue">Fatigue:</label>
-    <select id="fatigue" name="fatigue">
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select>
-
-    <label for="edema">Edema:</label>
-    <select id="edema" name="edema">
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select>
-
-    <label for="confusion">Confusion:</label>
-    <select id="confusion" name="confusion">
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select>
-
-    <label for="cold">Common Cold:</label>
-    <select id="cold" name="cold">
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select>
-
-    <label for="thirst">Thirst:</label>
-    <select id="thirst" name="thirst">
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-    </select>
-
-    <button type="submit">Submit</button>
-</form>
-
-<!-- Custom Modal for displaying results/errors -->
-<div id="resultModal" class="modal-overlay">
-    <div class="modal-content">
-        <h2 id="modalTitle"></h2>
-        <p id="modalMessage"></p>
-        <button onclick="closeModal()">OK</button>
-    </div>
-</div>
-
-<script>
-    // Function to show the custom modal
-    function showModal(title, message) {
-        const modal = document.getElementById("resultModal");
-        document.getElementById("modalTitle").innerText = title;
-        document.getElementById("modalMessage").innerText = message;
-        modal.classList.add("show");
-    }
-
-    // Function to close the custom modal
-    function closeModal() {
-        const modal = document.getElementById("resultModal");
-        modal.classList.remove("show");
-    }
-
-    async function submitForm(event) {
-        event.preventDefault();
-
-        const data = {
-            age: parseInt(document.getElementById("age").value),
-            bp: document.getElementById("bp").value,
-            // แก้ไขชื่อฟิลด์ให้ตรงกับ app.py (massBefore, massAfter)
-            massBefore: parseFloat(document.getElementById("massBefore").value),
-            massAfter: parseFloat(document.getElementById("massAfter").value),
-            urine: parseFloat(document.getElementById("urine").value),
-            water: parseFloat(document.getElementById("water").value),
-            gender: document.getElementById("gender").value,
-            fatigue: document.getElementById("fatigue").value,
-            edema: document.getElementById("edema").value,
-            confusion: document.getElementById("confusion").value,
-            cold: document.getElementById("cold").value,
-            thirst: document.getElementById("thirst").value
-        };
-
-        try {
-            const response = await fetch("https://aidetect-github-io.onrender.com/predict", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (!response.ok) {
-                const errorText = await response.text(); 
-                throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+            // Validate and convert numerical fields before sending
+            const numericalFields = ["age", "massBefore", "massAfter", "urine", "water"];
+            for (const field of numericalFields) {
+                // Check if the field is empty or cannot be parsed as a number
+                if (data[field] === "" || isNaN(parseFloat(data[field]))) {
+                    showModal("ข้อมูลไม่ถูกต้อง", `กรุณากรอกข้อมูลตัวเลขที่ถูกต้องสำหรับ "${field}"`);
+                    return; // Stop form submission if validation fails
+                }
+                data[field] = parseFloat(data[field]); // Convert to float
             }
 
-            const result = await response.json();
+            try {
+                const response = await fetch(BASE_API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
 
-            showModal("ผลการวิเคราะห์", "โรคที่ทำนาย: " + result.prediction);
+                if (!response.ok) {
+                    const errorJson = await response.json(); // Attempt to parse JSON error
+                    const errorMessage = errorJson.error || `HTTP error! status: ${response.status}`;
+                    const errorDetails = errorJson.details ? `Details: ${errorJson.details}` : '';
+                    throw new Error(`${errorMessage} ${errorDetails}`);
+                }
 
-        } catch (error) {
-            showModal("เกิดข้อผิดพลาด", "ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์หรือข้อมูลไม่ถูกต้อง: " + error.message);
-            console.error("Error during prediction:", error); // Log error to console for debugging
+                const result = await response.json();
+                showModal("ผลการวิเคราะห์", "โรคที่ทำนาย: " + result.prediction);
+
+            } catch (error) {
+                showModal("เกิดข้อผิดพลาด", "ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์หรือข้อมูลไม่ถูกต้อง: " + error.message);
+                console.error("Error during prediction:", error); // Log error to console for debugging
+            }
         }
-    }
-</script>
+    </script>
 
 </body>
 </html>
