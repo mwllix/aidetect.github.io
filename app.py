@@ -4,11 +4,11 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pandas as pd
 import numpy as np
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
 
-# โหลดโมเดล SVC และ Label Encoder
 try:
     model = pickle.load(open("svc.pkl", "rb"))
     le = pickle.load(open("label_encoder.pkl", "rb"))
@@ -27,7 +27,6 @@ def predict():
         if not data:
             return jsonify({"error": "Invalid JSON data provided"}), 400
 
-        # กำหนดรายการคอลัมน์ทั้งหมดที่โมเดลคาดหวัง (62 คอลัมน์)
         expected_columns = [
             "0-1", "5-15", "10-20", "40+", "45+", "50+", "60+", "65+",
             "<500", "<800", "350-550", "800-2000", "2000-3000", ">2000", ">3000",
@@ -43,11 +42,9 @@ def predict():
             "Itchy Skin", "Dark Urine", "Bone Pain"
         ]
 
-        # สร้าง list ของค่าจาก data ที่ได้รับมาตามลำดับของ expected_columns
-        # ถ้าไม่มีฟิลด์ใน data.get จะคืนค่า 0 เป็นค่าเริ่มต้น
+
         input_vector = [data.get(col, 0) for col in expected_columns]
         
-        # ทำนายโรค
         predicted_label = model.predict([input_vector])[0]
         predicted_disease = le.inverse_transform([predicted_label])[0]
 
@@ -55,6 +52,17 @@ def predict():
     except Exception as e:
         print(f"Error during prediction: {e}")
         return jsonify({"error": "An internal server error occurred", "details": str(e)}), 500
+
+@app.route("/notify-on-deploy", methods=["POST"])
+def notify_on_deploy():
+    data = request.get_json()
+    status = data.get("status")
+    service_name = data.get("service", {}).get("name")
+    updated_at = data.get("updatedAt")
+    
+    print(f"[{datetime.now()}] Webhook received: Service '{service_name}' deployed successfully at {updated_at}. Status: {status}")
+    
+    return jsonify({"message": "Notification received and processed."}), 200
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
