@@ -44,9 +44,12 @@ def predict():
         ]
 
         # สร้าง list ของค่าจาก data ที่ได้รับมาตามลำดับของ expected_columns
-        # ถ้าไม่มีฟิลด์ใน data.get จะคืนค่า 0 เป็นค่าเริ่มต้น
         input_vector = [data.get(col, 0) for col in expected_columns]
         
+        # ตรวจสอบว่ามีฟิลด์ 'age' ในข้อมูลที่ได้รับหรือไม่
+        if "age" not in data:
+            return jsonify({"error": "Missing required field: age"}), 400
+
         # ทำนายโรค
         predicted_label = model.predict([input_vector])[0]
         predicted_disease = le.inverse_transform([predicted_label])[0]
