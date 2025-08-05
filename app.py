@@ -2,6 +2,7 @@ import os
 import pickle
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import pandas as pd
 
 app = Flask(__name__)
 CORS(app)
@@ -25,9 +26,9 @@ def predict():
         if not data:
             return jsonify({"error": "Invalid JSON data provided"}), 400
 
-        # โมเดลคาดหวัง input เป็น array of values
-        # ดังนั้น เราจะแปลง Object ที่ได้รับมาเป็น list ตามลำดับที่ถูกต้อง
+        # กำหนดรายการคอลัมน์ทั้งหมดที่โมเดลคาดหวัง (62 คอลัมน์)
         expected_columns = [
+            "age",
             "0-1", "5-15", "10-20", "40+", "45+", "50+", "60+", "65+",
             "<500", "<800", "350-550", "800-2000", "2000-3000", ">2000", ">3000",
             ">=18.5", ">=25", "N/a", "<=2700", ">=3700", "120/80", ">130/80",
@@ -41,8 +42,9 @@ def predict():
             "Dizziness", "Nosebleeds", "Foamy Urine", "Abdominal Pain",
             "Itchy Skin", "Dark Urine", "Bone Pain"
         ]
-        
+
         # สร้าง list ของค่าจาก data ที่ได้รับมาตามลำดับของ expected_columns
+        # ถ้าไม่มีฟิลด์ใน data.get จะคืนค่า 0 เป็นค่าเริ่มต้น
         input_vector = [data.get(col, 0) for col in expected_columns]
         
         # ทำนายโรค
