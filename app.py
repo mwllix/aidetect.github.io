@@ -64,6 +64,14 @@ def notify_on_deploy():
     
     return jsonify({"message": "Notification received and processed."}), 200
 
+@app.route("/api/wakeup", methods=["POST"])
+def wakeup():
+    return jsonify({"message": "Server is awake and ready."}), 200
+
+@app.route("/api/status", methods=["GET"])
+def get_status():
+    return jsonify({"status": "online"}), 200
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
