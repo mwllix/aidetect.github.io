@@ -64,7 +64,7 @@ def notify_on_deploy():
     
     return jsonify({"message": "Notification received and processed."}), 200
 
-@app.route("/api/wakeup", methods=["POST"])
+@app.route("/api/wakeup", methods=["GET", "POST"])
 def wakeup():
     return jsonify({"message": "Server is awake and ready."}), 200
 
