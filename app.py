@@ -70,7 +70,9 @@ def wakeup():
 
 @app.route("/api/status", methods=["GET"])
 def get_status():
-    return jsonify({"status": "online"}), 200
+    response_data = {"status": "online"}
+    print(f"[{datetime.now()}] /api/status was called. Responding with: {response_data}")
+    return jsonify(response_data), 200
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
