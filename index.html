@@ -532,14 +532,67 @@
       }
     }, { once: true });
   }
-</script>
 
-<div id="statusIndicator" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: none;">
-  <span id="statusText" style="color: #333; margin-right: 10px;">กำลังปลุกเซิร์ฟเวอร์...</span>
-  <span id="statusLight" style="width: 15px; height: 15px; border-radius: 50%; background-color: gray; display: inline-block;"></span>
-</div>
+  document.addEventListener('DOMContentLoaded', () => {
+    const startButton = document.getElementById('startButton');
+    const statusIndicator = document.getElementById('statusIndicator');
+    const statusText = document.getElementById('statusText');
+    const statusLight = document.getElementById('statusLight');
+
+    // แสดงตัวแสดงสถานะทันทีเมื่อหน้าเว็บโหลด
+    statusIndicator.style.display = 'flex'; // เปลี่ยนจาก 'block' เป็น 'flex' เพื่อจัดเรียงข้อความและไฟ
+    startButton.style.display = 'none';
+
+    // ฟังก์ชันสำหรับปลุกเซิร์ฟเวอร์
+    async function wakeUpServer() {
+      statusText.innerText = 'กำลังปลุกเซิร์ฟเวอร์...';
+      statusLight.style.backgroundColor = 'gray';
+
+      try {
+        const response = await fetch('/api/wakeup', { method: 'POST' });
+        if (response.ok) {
+          setTimeout(checkServerStatus, 5000);
+        } else {
+          statusText.innerText = 'เกิดข้อผิดพลาดในการปลุกเซิร์ฟเวอร์';
+          statusLight.style.backgroundColor = 'red';
+        }
+      } catch (error) {
+        statusText.innerText = 'ไม่สามารถเชื่อมต่อได้';
+        statusLight.style.backgroundColor = 'red';
+        console.error('Error sending wake-up command:', error);
+      }
+    }
+
+    // ฟังก์ชันสำหรับตรวจสอบสถานะเซิร์ฟเวอร์
+    async function checkServerStatus() {
+      try {
+        const response = await fetch('/api/status');
+        const data = await response.json();
+
+        if (data.status === 'online') {
+          // เซิร์ฟเวอร์ออนไลน์แล้ว
+          statusText.innerText = 'ออนไลน์';
+          statusLight.style.backgroundColor = 'green';
+          startButton.style.display = 'flex';
+        } else {
+          // ยังออฟไลน์ ให้รอแล้วเช็คใหม่
+          statusText.innerText = 'กำลังรอเซิร์ฟเวอร์...';
+          setTimeout(checkServerStatus, 5000);
+        }
+      } catch (error) {
+        statusText.innerText = 'กำลังรอเซิร์ฟเวอร์...';
+        setTimeout(checkServerStatus, 5000);
+        console.error('Error fetching server status:', error);
+      }
+    }
+
+    // เรียกฟังก์ชันปลุกเซิร์ฟเวอร์ทันทีเมื่อหน้าเว็บโหลด
+    wakeUpServer();
+  });
+</script>
 
 </body>
 </html>
+
 
 
