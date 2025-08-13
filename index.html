@@ -68,7 +68,8 @@
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       display: flex;
-      align-items: center top;
+      flex-direction: column; /* Added to stack button and text */
+      align-items: center;
       padding-top: 50px;
       padding-bottom: 25px;
       justify-content: center;
@@ -90,8 +91,8 @@
       text-decoration: none;
       cursor: pointer;
       transition: background-color 0.3s ease;
-      position: absolute;
-      margin-top: 200px;
+      margin-top: 20px; /* Adjusted margin */
+      position: relative; /* Changed from absolute to relative */
     }
 
     .start-button:hover {
@@ -318,7 +319,6 @@
         flex: 1 1 100%;
       }
     }
-    
   </style>
 </head>
 <body>
@@ -333,15 +333,12 @@
 
 <main>
   <div class="main-layout">
-    <div id="statusIndicator" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: none; background-color: white; padding: 8px 12px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-      <span id="statusText" style="color: #333; margin-right: 10px;">กำลังปลุกเซิร์ฟเวอร์...</span>
-      <span id="statusLight" style="width: 15px; height: 15px; border-radius: 50%; background-color: gray; display: inline-block;"></span>
-    </div>
     <div class="left-box">
-      <a class="start-button" href="subpage.html">Start</a>
-      <p>This website is not designed to provide a medically verified diagnosis and may have limited accuracy. 
-        If you are experiencing health issues or are worried about your well-being, it is strongly recommended 
-        that you consult with a licensed medical professional or a real doctor. This platform is intended solely as an additional, 
+      <!-- แก้ไข: เพิ่ม id="startButton" และเปลี่ยนตำแหน่งปุ่ม -->
+      <a class="start-button" id="startButton" href="subpage.html">Start</a>
+      <p>This website is not designed to provide a medically verified diagnosis and may have limited accuracy.
+        If you are experiencing health issues or are worried about your well-being, it is strongly recommended
+        that you consult with a licensed medical professional or a real doctor. This platform is intended solely as an additional,
         alternative tool for general informational purposes and should not be trusted over professional medical advice, diagnosis, or treatment.</p>
     </div>
 
@@ -409,14 +406,14 @@
 
   <section id="about">
     <h2 id="introduction">Introduction</h2>
-    <p>People are hesitant to visit hospitals due to the high volume of patients who require hospital services. 
-      It is also not convenient for many people to visit hospitals. This means they cannot receive a professional diagnosis. 
-      They are either very busy or it would take too much time to go to the hospital, so they simply don’t have the time. 
-      This leads to neglect of their health, as they are not receiving a trustworthy opinion. This project aims to mitigate the problems 
-      stated above by utilizing Artificial Intelligence in the form of a website, providing easy access to assist in diagnosing any underlying 
+    <p>People are hesitant to visit hospitals due to the high volume of patients who require hospital services.
+      It is also not convenient for many people to visit hospitals. This means they cannot receive a professional diagnosis.
+      They are either very busy or it would take too much time to go to the hospital, so they simply don’t have the time.
+      This leads to neglect of their health, as they are not receiving a trustworthy opinion. This project aims to mitigate the problems
+      stated above by utilizing Artificial Intelligence in the form of a website, providing easy access to assist in diagnosing any underlying
       health problems these individuals may not be aware of.
     </p>
-    
+
     <h2 id="process">Process</h2>
     <p>1. Read and go through the website’s instructions and details</p>
     <p>2. Press the "Start" button</p>
@@ -425,7 +422,6 @@
     <p>5. The AI will then analyze the information given</p>
     <p>6. Results will be shown after the AI finishes analyzing</p>
 
-
     <h2 id="objectives">Objectives</h2>
     <p>1. Provide easier access to diagnosis</p>
     <p>2. Provide an alternative method instead of going to the hospital</p>
@@ -433,9 +429,9 @@
     <p>4. Prevent neglect of health</p>
 
     <h2 id="how">How it works</h2>
-    <p>The AI works by taking the data inputted by the users and analyzing them. 
-      These data include age, blood pressure, mass after 1 week, mass before 1 week, 
-      urine per day (mL), water intake per day (mL), risk gender (Male/Female/Both), fatigue (Yes/No), 
+    <p>The AI works by taking the data inputted by the users and analyzing them.
+      These data include age, blood pressure, mass after 1 week, mass before 1 week,
+      urine per day (mL), water intake per day (mL), risk gender (Male/Female/Both), fatigue (Yes/No),
       edema (Yes/No), confusion (Yes/No), common cold (Yes/No), thirst (Yes/No) + other symptoms</p>
 
     <h2 id="developers">Developers</h2>
@@ -448,6 +444,12 @@
 <footer>
   &copy; 2025 AIDetect Research Project
 </footer>
+
+<!-- แก้ไข: ย้าย div นี้มาอยู่ก่อนปิด body -->
+<div id="statusIndicator" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: none; background-color: white; padding: 8px 12px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+  <span id="statusText" style="color: #333; margin-right: 10px;">กำลังปลุกเซิร์ฟเวอร์...</span>
+  <span id="statusLight" style="width: 15px; height: 15px; border-radius: 50%; background-color: gray; display: inline-block;"></span>
+</div>
 
 <script>
   let slideIndex = 0;
@@ -544,10 +546,9 @@
     const statusLight = document.getElementById('statusLight');
 
     // แสดงตัวแสดงสถานะทันทีเมื่อหน้าเว็บโหลด
-    statusIndicator.style.display = 'flex'; // เปลี่ยนจาก 'block' เป็น 'flex' เพื่อจัดเรียงข้อความและไฟ
+    statusIndicator.style.display = 'flex';
     startButton.style.display = 'none';
 
-    // ฟังก์ชันสำหรับปลุกเซิร์ฟเวอร์
     async function wakeUpServer() {
       statusText.innerText = 'กำลังปลุกเซิร์ฟเวอร์...';
       statusLight.style.backgroundColor = 'gray';
@@ -567,19 +568,16 @@
       }
     }
 
-    // ฟังก์ชันสำหรับตรวจสอบสถานะเซิร์ฟเวอร์
     async function checkServerStatus() {
       try {
         const response = await fetch('/api/status');
         const data = await response.json();
 
         if (data.status === 'online') {
-          // เซิร์ฟเวอร์ออนไลน์แล้ว
           statusText.innerText = 'ออนไลน์';
           statusLight.style.backgroundColor = 'green';
           startButton.style.display = 'flex';
         } else {
-          // ยังออฟไลน์ ให้รอแล้วเช็คใหม่
           statusText.innerText = 'กำลังรอเซิร์ฟเวอร์...';
           setTimeout(checkServerStatus, 5000);
         }
@@ -590,14 +588,9 @@
       }
     }
 
-    // เรียกฟังก์ชันปลุกเซิร์ฟเวอร์ทันทีเมื่อหน้าเว็บโหลด
     wakeUpServer();
   });
 </script>
 
 </body>
 </html>
-
-
-
-
