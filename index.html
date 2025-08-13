@@ -553,7 +553,7 @@
       statusLight.style.backgroundColor = 'gray';
 
       try {
-        const response = await fetch('/api/wakeup', { method: 'GET','POST' });
+        const response = await fetch('/api/wakeup', { method: 'GET' });
         if (response.ok) {
           setTimeout(checkServerStatus, 5000);
         } else {
@@ -593,5 +593,6 @@
 
 </body>
 </html>
+
 
 
