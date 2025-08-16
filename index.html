@@ -68,7 +68,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       display: flex;
-      flex-direction: column; /* Added to stack button and text */
+      flex-direction: column;
       align-items: center;
       padding-top: 50px;
       padding-bottom: 25px;
@@ -91,8 +91,8 @@
       text-decoration: none;
       cursor: pointer;
       transition: background-color 0.3s ease;
-      margin-top: 20px; /* Adjusted margin */
-      position: relative; /* Changed from absolute to relative */
+      margin-top: 20px; 
+      position: relative; 
     }
 
     .start-button:hover {
@@ -545,12 +545,11 @@
     const statusLight = document.getElementById('statusLight');
     const API_ENDPOINT = 'https://aidetect-github-io.onrender.com';
 
-    // แสดงตัวแสดงสถานะทันทีเมื่อหน้าเว็บโหลด
     statusIndicator.style.display = 'flex';
     startButton.style.display = 'none';
 
     async function wakeUpServer() {
-      statusText.innerText = 'กำลังปลุกเซิร์ฟเวอร์...';
+      statusText.innerText = 'Waking up server...';
       statusLight.style.backgroundColor = 'gray';
 
       try {
@@ -558,11 +557,11 @@
         if (response.ok) {
           setTimeout(checkServerStatus, 5000);
         } else {
-          statusText.innerText = 'เกิดข้อผิดพลาดในการปลุกเซิร์ฟเวอร์';
+          statusText.innerText = 'Error waking up the server';
           statusLight.style.backgroundColor = 'red';
         }
       } catch (error) {
-        statusText.innerText = 'ไม่สามารถเชื่อมต่อได้';
+        statusText.innerText = 'Unable to connect';
         statusLight.style.backgroundColor = 'red';
         console.error('Error sending wake-up command:', error);
       }
@@ -574,15 +573,15 @@
         const data = await response.json();
 
         if (data.status === 'online') {
-          statusText.innerText = 'ออนไลน์';
+          statusText.innerText = 'Online';
           statusLight.style.backgroundColor = 'green';
           startButton.style.display = 'flex';
         } else {
-          statusText.innerText = 'กำลังรอเซิร์ฟเวอร์...';
+          statusText.innerText = 'Waiting for server...';
           setTimeout(checkServerStatus, 5000);
         }
       } catch (error) {
-        statusText.innerText = 'กำลังรอเซิร์ฟเวอร์...';
+        statusText.innerText = 'Waiting for server...';
         setTimeout(checkServerStatus, 5000);
         console.error('Error fetching server status:', error);
       }
@@ -594,6 +593,7 @@
 
 </body>
 </html>
+
 
 
 
