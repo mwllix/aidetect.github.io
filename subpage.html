@@ -99,6 +99,18 @@
 
 <h1>Health Information</h1>
 
+<div id="serverStatus" style="text-align:center; margin-bottom:20px;">
+    <span id="statusLight" style="
+        display:inline-block;
+        width:15px;
+        height:15px;
+        border-radius:50%;
+        background-color:gray;
+        margin-right:8px;">
+    </span>
+    <span id="statusText">Checking server...</span>
+</div>
+
 <form onsubmit="submitForm(event)">
     <div class="feature-group">
         <h3>Age</h3>
@@ -208,6 +220,35 @@
         <button onclick="closeModal()">OK</button>
     </div>
 </div>
+
+<script>
+    const API_ENDPOINT = "https://aidetect-github-io.onrender.com";
+
+    const statusText = document.getElementById("statusText");
+    const statusLight = document.getElementById("statusLight");
+
+    async function checkServerStatus() {
+        try {
+            const response = await fetch(`${API_ENDPOINT}/api/status`, { method: 'GET' });
+            const data = await response.json();
+
+            if (data.status === "online") {
+                statusText.innerText = "Online";
+                statusLight.style.backgroundColor = "green";
+            } else {
+                statusText.innerText = "Waiting for server...";
+                statusLight.style.backgroundColor = "orange";
+                setTimeout(checkServerStatus, 5000);
+            }
+        } catch (error) {
+            statusText.innerText = "Cannot connect to server";
+            statusLight.style.backgroundColor = "red";
+            console.error("Error fetching server status:", error);
+            setTimeout(checkServerStatus, 5000);
+        }
+    }
+    checkServerStatus();
+</script>
 
 <script>
     function showModal(title, message) {
