@@ -38,6 +38,27 @@
         .feature-item {
             margin-bottom: 10px;
         }
+        .feature-group select {
+            width: 200px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-group select:hover {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0,123,255,0.3);
+        }
+
+        .feature-group select:focus {
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 5px rgba(0,86,179,0.5);
+        }
         button {
             margin-top: 30px;
             padding: 12px 24px;
