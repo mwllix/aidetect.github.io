@@ -33,6 +33,7 @@
         }
         .feature-group h3 {
             color: #007c91;
+            mar
             margin-top: 0;
             margin-bottom: 0;
             text-align: left;
@@ -133,79 +134,93 @@
 <form onsubmit="submitForm(event)">
     <div class="feature-group">
         <h3>Age</h3>
-        <select name="age">
-        <option value="0-1"> 0-1</option>
-        <option value="5-15"> 5-15</option>
-        <option value="10-20"> 10-20</option>
-        <option value="40+"> 40+</option>
-        <option value="45+"> 45+</option>
-        <option value="50+"> 50+</option>
-        <option value="60+"> 60+</option>
-        <option value="65+"> 65+</option>
+        <select name="age">
+            <option value="0-1">0-1</option>
+            <option value="5-15">5-15</option>
+            <option value="10-20">10-20</option>
+            <option value="40+">40+</option>
+            <option value="45+">45+</option>
+            <option value="50+">50+</option>
+            <option value="60+">60+</option>
+            <option value="65+">65+</option>
         </select>
-    </div>
+    </div>
 
     <div class="feature-group">
         <h3>Urine per Day</h3>
-        <label><input type="checkbox" name="urine" value="<500"> &lt;500</label>
-        <label><input type="checkbox" name="urine" value="<800"> &lt;800</label>
-        <label><input type="checkbox" name="urine" value="350-550"> 350-550</label>
-        <label><input type="checkbox" name="urine" value="800-2000"> 800-2000</label>
-        <label><input type="checkbox" name="urine" value="2000-3000"> 2000-3000</label>
-        <label><input type="checkbox" name="urine" value=">2000"> &gt;2000</label>
-        <label><input type="checkbox" name="urine" value=">3000"> &gt;3000</label>
+        <select name="urine">
+            <option value="<500">&lt;500</option>
+            <option value="<800">&lt;800</option>
+            <option value="350-550">350-550</option>
+            <option value="800-2000">800-2000</option>
+            <option value="2000-3000">2000-3000</option>
+            <option value=">2000">&gt;2000</option>
+            <option value=">3000">&gt;3000</option>
+        </select>
     </div>
 
     <div class="feature-group">
         <h3>Body Mass Index (BMI)</h3>
-        <label><input type="checkbox" name="bmi" value=">=18.5"> &gt;=18.5</label>
-        <label><input type="checkbox" name="bmi" value=">=25"> &gt;=25</label>
-        <label><input type="checkbox" name="bmi" value="N/a"> N/a</label>
+        <select name="bmi">
+            <option value=">=18.5">&gt;=18.5</option>
+            <option value=">=25">&gt;=25</option>
+            <option value="N/a">N/a</option>
+        </select>
     </div>
     
     <div class="feature-group">
         <h3>Water Intake</h3>
-        <label><input type="checkbox" name="water" value="<=2700"> &lt;=2700</label>
-        <label><input type="checkbox" name="water" value=">=3700"> &gt;=3700</label>
+        <select name="water">
+            <option value="<=2700">&lt;=2700</option>
+            <option value=">=3700">&gt;=3700</option>
+        </select>
     </div>
 
     <div class="feature-group">
         <h3>Blood Pressure</h3>
-        <label><input type="checkbox" name="bp" value="120/80"> 120/80</label>
-        <label><input type="checkbox" name="bp" value=">130/80"> &gt;130/80</label>
-        <label><input type="checkbox" name="bp" value="<130/80"> &lt;130/80</label>
-        <label><input type="checkbox" name="bp" value=">=130/80"> &gt;=130/80</label>
-        <label><input type="checkbox" name="bp" value=">140/80"> &gt;140/80</label>
-        <label><input type="checkbox" name="bp" value="95-145/80"> 95-145/80</label>
+        <select name="bp">
+            <option value="120/80">120/80</option>
+            <option value=">130/80">&gt;130/80</option>
+            <option value="<130/80">&lt;130/80</option>
+            <option value=">=130/80">&gt;=130/80</option>
+            <option value=">140/80">&gt;140/80</option>
+            <option value="95-145/80">95-145/80</option>
+        </select>
     </div>
 
     <div class="feature-group">
         <h3>Mass</h3>
-        <label><input type="checkbox" name="mass" value="Mass"> Mass</label>
-        <label><input type="checkbox" name="mass" value="Negligible"> Negligible</label>
-        <label><input type="checkbox" name="mass" value="Overweight"> Overweight</label>
+        <select name="mass">
+            <option value="Mass">Mass</option>
+            <option value="Negligible">Negligible</option>
+            <option value="Overweight">Overweight</option>
+        </select>
     </div>
 
     <div class="feature-group">
         <h3>Mass Change</h3>
-        <label><input type="checkbox" name="massChange" value="M+/-"> M+/-</label>
-        <label><input type="checkbox" name="massChange" value="M+7Kg"> M+7Kg</label>
-        <label><input type="checkbox" name="massChange" value="-M+7Kg or 10Kg"> -M+7Kg or 10Kg</label>
-        <label><input type="checkbox" name="massChange" value="M minus 1Kg"> M minus 1Kg</label>
-        <label><input type="checkbox" name="massChange" value="M minus 5Kg"> M minus 5Kg</label>
-        <label><input type="checkbox" name="massChange" value="M minus 10Kg"> M minus 10Kg</label>
-        <label><input type="checkbox" name="massChange" value="M minus 0.5-1Kg"> M minus 0.5-1Kg</label>
-        <label><input type="checkbox" name="massChange" value="<M"> &lt;M</label>
-        <label><input type="checkbox" name="massChange" value="No change"> No change</label>
-        <label><input type="checkbox" name="massChange" value="Negligible.1"> Negligible.1</label>
+        <select name="massChange">
+            <option value="M+/-">M+/-</option>
+            <option value="M+7Kg">M+7Kg</option>
+            <option value="-M+7Kg or 10Kg">-M+7Kg or 10Kg</option>
+            <option value="M minus 1Kg">M minus 1Kg</option>
+            <option value="M minus 5Kg">M minus 5Kg</option>
+            <option value="M minus 10Kg">M minus 10Kg</option>
+            <option value="M minus 0.5-1Kg">M minus 0.5-1Kg</option>
+            <option value="<M">&lt;M</option>
+            <option value="No change">No change</option>
+            <option value="Negligible.1">Negligible.1</option>
+        </select>
     </div>
 
     <div class="feature-group">
         <h3>Risk Gender</h3>
-        <label><input type="checkbox" name="gender" value="Male"> Male</label>
-        <label><input type="checkbox" name="gender" value="Female"> Female</label>
+        <select name="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
     </div>
-
+    
     <div class="feature-group">
         <h3>Symptoms </h3>
         <label><input type="checkbox" name="symptoms" value="Wheezing"> Wheezing</label>
