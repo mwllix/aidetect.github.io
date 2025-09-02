@@ -33,17 +33,11 @@
         }
         .feature-group h3 {
             color: #007c91;
-            mar
             margin-top: 0;
             margin-bottom: 0;
             text-align: left;
         }
-        .feature-item {
-            margin-bottom: 10px;
-        }
-        .feature-group select {
-            margin-left: 0;
-            margin-top: 0;
+        .feature-group select, .feature-group label {
             display: block;
             width: 100%;
             padding: 8px;
@@ -54,16 +48,24 @@
             cursor: pointer;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
-
         .feature-group select:hover {
             border-color: #007bff;
             box-shadow: 0 0 5px rgba(0,123,255,0.3);
         }
-
         .feature-group select:focus {
             outline: none;
             border-color: #0056b3;
             box-shadow: 0 0 5px rgba(0,86,179,0.5);
+        }
+        .feature-group input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .feature-group label {
+            border: none;
+            background: none;
+            cursor: pointer;
+            padding: 5px 0;
+            width: fit-content;
         }
         button {
             margin-top: 30px;
@@ -134,7 +136,8 @@
 <form onsubmit="submitForm(event)">
     <div class="feature-group">
         <h3>Age</h3>
-        <select name="age" multiple size = "6">
+        <select name="age">
+            <option value="">Select...</option>
             <option value="0-1">0-1</option>
             <option value="5-15">5-15</option>
             <option value="10-20">10-20</option>
@@ -149,6 +152,7 @@
     <div class="feature-group">
         <h3>Urine per Day</h3>
         <select name="urine">
+            <option value="">Select...</option>
             <option value="<500">&lt;500</option>
             <option value="<800">&lt;800</option>
             <option value="350-550">350-550</option>
@@ -162,6 +166,7 @@
     <div class="feature-group">
         <h3>Body Mass Index (BMI)</h3>
         <select name="bmi">
+            <option value="">Select...</option>
             <option value=">=18.5">&gt;=18.5</option>
             <option value=">=25">&gt;=25</option>
             <option value="N/a">N/a</option>
@@ -171,6 +176,7 @@
     <div class="feature-group">
         <h3>Water Intake</h3>
         <select name="water">
+            <option value="">Select...</option>
             <option value="<=2700">&lt;=2700</option>
             <option value=">=3700">&gt;=3700</option>
         </select>
@@ -179,6 +185,7 @@
     <div class="feature-group">
         <h3>Blood Pressure</h3>
         <select name="bp">
+            <option value="">Select...</option>
             <option value="120/80">120/80</option>
             <option value=">130/80">&gt;130/80</option>
             <option value="<130/80">&lt;130/80</option>
@@ -191,6 +198,7 @@
     <div class="feature-group">
         <h3>Mass</h3>
         <select name="mass">
+            <option value="">Select...</option>
             <option value="Mass">Mass</option>
             <option value="Negligible">Negligible</option>
             <option value="Overweight">Overweight</option>
@@ -200,6 +208,7 @@
     <div class="feature-group">
         <h3>Mass Change</h3>
         <select name="massChange">
+            <option value="">Select...</option>
             <option value="M+/-">M+/-</option>
             <option value="M+7Kg">M+7Kg</option>
             <option value="-M+7Kg or 10Kg">-M+7Kg or 10Kg</option>
@@ -216,13 +225,14 @@
     <div class="feature-group">
         <h3>Risk Gender</h3>
         <select name="gender">
+            <option value="">Select...</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
         </select>
     </div>
     
     <div class="feature-group">
-        <h3>Symptoms </h3>
+        <h3>Symptoms</h3>
         <label><input type="checkbox" name="symptoms" value="Wheezing"> Wheezing</label>
         <label><input type="checkbox" name="symptoms" value="Headache"> Headache</label>
         <label><input type="checkbox" name="symptoms" value="Short Breaths"> Short Breaths</label>
@@ -301,7 +311,7 @@
 
     async function submitForm(event) {
         event.preventDefault();
-        
+
         const data62Features = {
             "0-1": 0, "5-15": 0, "10-20": 0, "40+": 0, "45+": 0, "50+": 0, "60+": 0, "65+": 0,
             "<500": 0, "<800": 0, "350-550": 0, "800-2000": 0, "2000-3000": 0, ">2000": 0, ">3000": 0,
@@ -317,13 +327,19 @@
             "Itchy Skin": 0, "Dark Urine": 0, "Bone Pain": 0
         };
 
-        const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
-        allCheckboxes.forEach(checkbox => {
-            const featureName = checkbox.value;
-            if (checkbox.checked) {
-                if (data62Features.hasOwnProperty(featureName)) {
-                    data62Features[featureName] = 1;
-                }
+        // Process all dropdowns
+        const selects = document.querySelectorAll('select');
+        selects.forEach(select => {
+            if (select.value && data62Features.hasOwnProperty(select.value)) {
+                data62Features[select.value] = 1;
+            }
+        });
+
+        // Process all checkboxes (Symptoms)
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked && data62Features.hasOwnProperty(checkbox.value)) {
+                data62Features[checkbox.value] = 1;
             }
         });
 
@@ -342,7 +358,6 @@
             }
 
             const result = await response.json();
-
             showModal("Analysis Result", "Predicted Disease: " + result.prediction);
 
         } catch (error) {
