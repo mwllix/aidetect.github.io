@@ -4,42 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>AIDetect - Questionnaire</title>
-    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f9fcff;
             color: #333;
-            padding: 20px;
+            padding: 40px;
             margin: 0;
-        }
-        .subpage-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #ffffff;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-            border-radius: 12px;
-            max-width: 800px;
-            margin: auto;
-            margin-bottom: 20px;
-        }
-        .lang-btn {
-            font-size: 16px;
-            background-color: #007c91;
-            color: white;
-            border: 1px solid white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
         }
         h1 {
             color: #007c91;
             text-align: center;
-            margin: 0;
-            font-size: 1.5em;
+            margin-bottom: 30px;
         }
         form {
             background: white;
@@ -150,21 +126,18 @@
 </head>
 <body>
 
-<div class="subpage-header">
-    <h1 data-translate="pageTitle">Health Information</h1>
-    <button id="lang-toggle" class="lang-btn" onclick="toggleLanguage()">TH</button>
-</div>
+<h1>Health Information</h1>
 
 <div id="serverStatus" style="position: fixed;bottom: 20px;right: 20px;background-color: rgba(255,255,255,0.9);padding: 8px 12px;border-radius: 8px;box-shadow: 0 2px 8px rgba(0,0,0,0.2);display: flex;align-items: center;z-index: 9999;">
     <span id="statusLight" style="display:inline-block;width:15px;height:15px;border-radius:50%;background-color:gray;margin-right:8px;"></span>
-    <span id="statusText" data-translate="statusChecking">Checking server...</span>
+    <span id="statusText">Checking server...</span>
 </div>
 
 <form onsubmit="submitForm(event)">
     <div class="feature-group">
-        <h3 data-translate="age">Age</h3>
+        <h3>Age</h3>
         <select name="age">
-            <option value="" data-translate="select">Select...</option>
+            <option value="">Select...</option>
             <option value="0-1">0-1</option>
             <option value="5-15">5-15</option>
             <option value="10-20">10-20</option>
@@ -177,9 +150,9 @@
     </div>
 
     <div class="feature-group">
-        <h3 data-translate="urine">Urine per Day</h3>
+        <h3>Urine per Day</h3>
         <select name="urine">
-            <option value="" data-translate="select">Select...</option>
+            <option value="">Select...</option>
             <option value="<500">&lt;500</option>
             <option value="<800">&lt;800</option>
             <option value="350-550">350-550</option>
@@ -191,9 +164,9 @@
     </div>
 
     <div class="feature-group">
-        <h3 data-translate="bmi">Body Mass Index (BMI)</h3>
+        <h3>Body Mass Index (BMI)</h3>
         <select name="bmi">
-            <option value="" data-translate="select">Select...</option>
+            <option value="">Select...</option>
             <option value=">=18.5">&gt;=18.5</option>
             <option value=">=25">&gt;=25</option>
             <option value="N/a">N/a</option>
@@ -201,18 +174,18 @@
     </div>
     
     <div class="feature-group">
-        <h3 data-translate="water">Water Intake</h3>
+        <h3>Water Intake</h3>
         <select name="water">
-            <option value="" data-translate="select">Select...</option>
+            <option value="">Select...</option>
             <option value="<=2700">&lt;=2700</option>
             <option value=">=3700">&gt;=3700</option>
         </select>
     </div>
 
     <div class="feature-group">
-        <h3 data-translate="bp">Blood Pressure</h3>
+        <h3>Blood Pressure</h3>
         <select name="bp">
-            <option value="" data-translate="select">Select...</option>
+            <option value="">Select...</option>
             <option value="120/80">120/80</option>
             <option value=">130/80">&gt;130/80</option>
             <option value="<130/80">&lt;130/80</option>
@@ -223,9 +196,9 @@
     </div>
 
     <div class="feature-group">
-        <h3 data-translate="mass">Mass</h3>
+        <h3>Mass</h3>
         <select name="mass">
-            <option value="" data-translate="select">Select...</option>
+            <option value="">Select...</option>
             <option value="Mass">Mass</option>
             <option value="Negligible">Negligible</option>
             <option value="Overweight">Overweight</option>
@@ -233,9 +206,9 @@
     </div>
 
     <div class="feature-group">
-        <h3 data-translate="massChange">Mass Change</h3>
+        <h3>Mass Change</h3>
         <select name="massChange">
-            <option value="" data-translate="select">Select...</option>
+            <option value="">Select...</option>
             <option value="M+/-">M+/-</option>
             <option value="M+7Kg">M+7Kg</option>
             <option value="-M+7Kg or 10Kg">-M+7Kg or 10Kg</option>
@@ -250,181 +223,80 @@
     </div>
 
     <div class="feature-group">
-        <h3 data-translate="gender">Risk Gender</h3>
+        <h3>Risk Gender</h3>
         <select name="gender">
-            <option value="" data-translate="select">Select...</option>
-            <option value="Male" data-translate="male">Male</option>
-            <option value="Female" data-translate="female">Female</option>
+            <option value="">Select...</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
         </select>
     </div>
     
     <div class="feature-group">
-        <h3 data-translate="symptoms">Symptoms</h3>
-        <label><input type="checkbox" name="symptoms" value="Wheezing"> <span data-translate="wheezing">Wheezing</span></label>
-        <label><input type="checkbox" name="symptoms" value="Headache"> <span data-translate="headache">Headache</span></label>
-        <label><input type="checkbox" name="symptoms" value="Short Breaths"> <span data-translate="shortBreaths">Short Breaths</span></label>
-        <label><input type="checkbox" name="symptoms" value="Rapid Breathing"> <span data-translate="rapidBreathing">Rapid Breathing</span></label>
-        <label><input type="checkbox" name="symptoms" value="Anxiety"> <span data-translate="anxiety">Anxiety</span></label>
-        <label><input type="checkbox" name="symptoms" value="Urine at Night"> <span data-translate="urineAtNight">Urine at Night</span></label>
-        <label><input type="checkbox" name="symptoms" value="Irritability"> <span data-translate="irritability">Irritability</span></label>
-        <label><input type="checkbox" name="symptoms" value="Blurred Vision"> <span data-translate="blurredVision">Blurred Vision</span></label>
-        <label><input type="checkbox" name="symptoms" value="Slow Healing"> <span data-translate="slowHealing">Slow Healing</span></label>
-        <label><input type="checkbox" name="symptoms" value="Dry Mouth"> <span data-translate="dryMouth">Dry Mouth</span></label>
-        <label><input type="checkbox" name="symptoms" value="Muscle Aches"> <span data-translate="muscleAches">Muscle Aches</span></label>
-        <label><input type="checkbox" name="symptoms" value="Nausea/Vomiting"> <span data-translate="nauseaVomiting">Nausea/Vomiting</span></label>
-        <label><input type="checkbox" name="symptoms" value="Insomnia"> <span data-translate="insomnia">Insomnia</span></label>
-        <label><input type="checkbox" name="symptoms" value="Chest Pain"> <span data-translate="chestPain">Chest Pain</span></label>
-        <label><input type="checkbox" name="symptoms" value="Dizziness"> <span data-translate="dizziness">Dizziness</span></label>
-        <label><input type="checkbox" name="symptoms" value="Nosebleeds"> <span data-translate="nosebleeds">Nosebleeds</span></label>
-        <label><input type="checkbox" name="symptoms" value="Foamy Urine"> <span data-translate="foamyUrine">Foamy Urine</span></label>
-        <label><input type="checkbox" name="symptoms" value="Abdominal Pain"> <span data-translate="abdominalPain">Abdominal Pain</span></label>
-        <label><input type="checkbox" name="symptoms" value="Itchy Skin"> <span data-translate="itchySkin">Itchy Skin</span></label>
-        <label><input type="checkbox" name="symptoms" value="Dark Urine"> <span data-translate="darkUrine">Dark Urine</span></label>
-        <label><input type="checkbox" name="symptoms" value="Bone Pain"> <span data-translate="bonePain">Bone Pain</span></label>
+        <h3>Symptoms</h3>
+        <label><input type="checkbox" name="symptoms" value="Wheezing"> Wheezing</label>
+        <label><input type="checkbox" name="symptoms" value="Headache"> Headache</label>
+        <label><input type="checkbox" name="symptoms" value="Short Breaths"> Short Breaths</label>
+        <label><input type="checkbox" name="symptoms" value="Rapid Breathing"> Rapid Breathing</label>
+        <label><input type="checkbox" name="symptoms" value="Anxiety"> Anxiety</label>
+        <label><input type="checkbox" name="symptoms" value="Urine at Night"> Urine at Night</label>
+        <label><input type="checkbox" name="symptoms" value="Irritability"> Irritability</label>
+        <label><input type="checkbox" name="symptoms" value="Blurred Vision"> Blurred Vision</label>
+        <label><input type="checkbox" name="symptoms" value="Slow Healing"> Slow Healing</label>
+        <label><input type="checkbox" name="symptoms" value="Dry Mouth"> Dry Mouth</label>
+        <label><input type="checkbox" name="symptoms" value="Muscle Aches"> Muscle Aches</label>
+        <label><input type="checkbox" name="symptoms" value="Nausea/Vomiting"> Nausea/Vomiting</label>
+        <label><input type="checkbox" name="symptoms" value="Insomnia"> Insomnia</label>
+        <label><input type="checkbox" name="symptoms" value="Chest Pain"> Chest Pain</label>
+        <label><input type="checkbox" name="symptoms" value="Dizziness"> Dizziness</label>
+        <label><input type="checkbox" name="symptoms" value="Nosebleeds"> Nosebleeds</label>
+        <label><input type="checkbox" name="symptoms" value="Foamy Urine"> Foamy Urine</label>
+        <label><input type="checkbox" name="symptoms" value="Abdominal Pain"> Abdominal Pain</label>
+        <label><input type="checkbox" name="symptoms" value="Itchy Skin"> Itchy Skin</label>
+        <label><input type="checkbox" name="symptoms" value="Dark Urine"> Dark Urine</label>
+        <label><input type="checkbox" name="symptoms" value="Bone Pain"> Bone Pain</label>
     </div>
 
-    <button type="submit" data-translate="submit">Submit</button>
+    <button type="submit">Submit</button>
 </form>
 
 <div id="resultModal" class="modal-overlay">
     <div class="modal-content">
         <h2 id="modalTitle"></h2>
         <p id="modalMessage"></p>
-        <button onclick="closeModal()" data-translate="modalOk">OK</button>
+        <button onclick="closeModal()">OK</button>
     </div>
 </div>
 
 <script>
     const API_ENDPOINT = "https://aidetect-github-io.onrender.com";
 
-    // --- Translations ---
-    const translations = {
-        en: {
-            pageTitle: "Health Information",
-            age: "Age",
-            urine: "Urine per Day",
-            bmi: "Body Mass Index (BMI)",
-            water: "Water Intake",
-            bp: "Blood Pressure",
-            mass: "Mass",
-            massChange: "Mass Change",
-            gender: "Risk Gender",
-            symptoms: "Symptoms",
-            select: "Select...",
-            male: "Male",
-            female: "Female",
-            wheezing: "Wheezing",
-            headache: "Headache",
-            shortBreaths: "Short Breaths",
-            rapidBreathing: "Rapid Breathing",
-            anxiety: "Anxiety",
-            urineAtNight: "Urine at Night",
-            irritability: "Irritability",
-            blurredVision: "Blurred Vision",
-            slowHealing: "Slow Healing",
-            dryMouth: "Dry Mouth",
-            muscleAches: "Muscle Aches",
-            nauseaVomiting: "Nausea/Vomiting",
-            insomnia: "Insomnia",
-            chestPain: "Chest Pain",
-            dizziness: "Dizziness",
-            nosebleeds: "Nosebleeds",
-            foamyUrine: "Foamy Urine",
-            abdominalPain: "Abdominal Pain",
-            itchySkin: "Itchy Skin",
-            darkUrine: "Dark Urine",
-            bonePain: "Bone Pain",
-            submit: "Submit",
-            statusChecking: "Checking server...",
-            statusOnline: "Online",
-            statusWaiting: "Waiting for server...",
-            statusError: "Cannot connect to server",
-            modalTitleResult: "Analysis Result",
-            modalTitleError: "Error",
-            modalMessagePrediction: "Predicted Disease: ",
-            modalMessageError: "Could not connect to the server or invalid data: ",
-            modalOk: "OK"
-        },
-        th: {
-            pageTitle: "ข้อมูลสุขภาพ",
-            age: "อายุ",
-            urine: "ปัสสาวะต่อวัน",
-            bmi: "ดัชนีมวลกาย (BMI)",
-            water: "ปริมาณน้ำที่ดื่ม",
-            bp: "ความดันโลหิต",
-            mass: "มวลร่างกาย",
-            massChange: "การเปลี่ยนแปลงของมวลร่างกาย",
-            gender: "เพศที่มีความเสี่ยง",
-            symptoms: "อาการ",
-            select: "เลือก...",
-            male: "ชาย",
-            female: "หญิง",
-            wheezing: "หายใจมีเสียงหวีด",
-            headache: "ปวดศีรษะ",
-            shortBreaths: "หายใจถี่",
-            rapidBreathing: "หายใจเร็ว",
-            anxiety: "ความวิตกกังวล",
-            urineAtNight: "ปัสสาวะตอนกลางคืน",
-            irritability: "หงุดหงิดง่าย",
-            blurredVision: "ตาพร่ามัว",
-            slowHealing: "แผลหายช้า",
-            dryMouth: "ปากแห้ง",
-            muscleAches: "ปวดเมื่อยกล้ามเนื้อ",
-            nauseaVomiting: "คลื่นไส้/อาเจียน",
-            insomnia: "นอนไม่หลับ",
-            chestPain: "เจ็บหน้าอก",
-            dizziness: "วิงเวียนศีรษะ",
-            nosebleeds: "เลือดกำเดาไหล",
-            foamyUrine: "ปัสสาวะเป็นฟอง",
-            abdominalPain: "ปวดท้อง",
-            itchySkin: "ผิวหนังคัน",
-            darkUrine: "ปัสสาวะสีเข้ม",
-            bonePain: "ปวดกระดูก",
-            submit: "ส่งข้อมูล",
-            statusChecking: "กำลังตรวจสอบเซิร์ฟเวอร์...",
-            statusOnline: "ออนไลน์",
-            statusWaiting: "กำลังรอเซิร์ฟเวอร์...",
-            statusError: "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์",
-            modalTitleResult: "ผลการวิเคราะห์",
-            modalTitleError: "ข้อผิดพลาด",
-            modalMessagePrediction: "โรคที่คาดการณ์: ",
-            modalMessageError: "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์หรือข้อมูลไม่ถูกต้อง: ",
-            modalOk: "ตกลง"
-        }
-    };
-    
-    let currentLang = 'en';
-    const langToggleBtn = document.getElementById('lang-toggle');
     const statusText = document.getElementById("statusText");
     const statusLight = document.getElementById("statusLight");
-    
-    function setLanguage(lang) {
-        const elementsToTranslate = document.querySelectorAll('[data-translate]');
-        elementsToTranslate.forEach(el => {
-            const key = el.getAttribute('data-translate');
-            if (translations[lang] && translations[lang][key]) {
-                el.innerText = translations[lang][key];
+
+    async function checkServerStatus() {
+        try {
+            const response = await fetch(${API_ENDPOINT}/api/status, { method: 'GET' });
+            const data = await response.json();
+
+            if (data.status === "online") {
+                statusText.innerText = "Online";
+                statusLight.style.backgroundColor = "green";
+            } else {
+                statusText.innerText = "Waiting for server...";
+                statusLight.style.backgroundColor = "orange";
+                setTimeout(checkServerStatus, 5000);
             }
-        });
-
-        // Special case for select options without data-translate
-        const genderOptions = document.querySelector('select[name="gender"]').options;
-        genderOptions[1].innerText = translations[lang].male;
-        genderOptions[2].innerText = translations[lang].female;
-
-        // Update button text to show the opposite language
-        langToggleBtn.innerText = lang === 'en' ? 'TH' : 'EN';
-        currentLang = lang;
-        
-        // Update server status text after changing language
-        checkServerStatus();
+        } catch (error) {
+            statusText.innerText = "Cannot connect to server";
+            statusLight.style.backgroundColor = "red";
+            console.error("Error fetching server status:", error);
+            setTimeout(checkServerStatus, 5000);
+        }
     }
+    checkServerStatus();
+</script>
 
-    function toggleLanguage() {
-        const newLang = currentLang === 'en' ? 'th' : 'en';
-        setLanguage(newLang);
-    }
-    
+<script>
     function showModal(title, message) {
         const modal = document.getElementById("resultModal");
         document.getElementById("modalTitle").innerText = title;
@@ -437,27 +309,6 @@
         modal.classList.remove("show");
     }
 
-    async function checkServerStatus() {
-        try {
-            const response = await fetch(`${API_ENDPOINT}/api/status`, { method: 'GET' });
-            const data = await response.json();
-
-            if (data.status === "online") {
-                statusText.innerText = translations[currentLang].statusOnline;
-                statusLight.style.backgroundColor = "green";
-            } else {
-                statusText.innerText = translations[currentLang].statusWaiting;
-                statusLight.style.backgroundColor = "orange";
-                setTimeout(checkServerStatus, 5000);
-            }
-        } catch (error) {
-            statusText.innerText = translations[currentLang].statusError;
-            statusLight.style.backgroundColor = "red";
-            console.error("Error fetching server status:", error);
-            setTimeout(checkServerStatus, 5000);
-        }
-    }
-    
     async function submitForm(event) {
         event.preventDefault();
 
@@ -476,6 +327,7 @@
             "Itchy Skin": 0, "Dark Urine": 0, "Bone Pain": 0
         };
 
+        // Process all dropdowns
         const selects = document.querySelectorAll('select');
         selects.forEach(select => {
             if (select.value && data62Features.hasOwnProperty(select.value)) {
@@ -483,6 +335,7 @@
             }
         });
 
+        // Process all checkboxes (Symptoms)
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(checkbox => {
             if (checkbox.checked && data62Features.hasOwnProperty(checkbox.value)) {
@@ -501,29 +354,17 @@
 
             if (!response.ok) {
                 const errorText = await response.text();
-                throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+                throw new Error(HTTP error! status: ${response.status}, message: ${errorText});
             }
 
             const result = await response.json();
-            const predictedDisease = result.prediction;
-            const message = translations[currentLang].modalMessagePrediction + predictedDisease;
-            showModal(translations[currentLang].modalTitleResult, message);
+            showModal("Analysis Result", "Predicted Disease: " + result.prediction);
+
         } catch (error) {
-            const errorMessage = translations[currentLang].modalMessageError + error.message;
-            showModal(translations[currentLang].modalTitleError, errorMessage);
+            showModal("Error", "Could not connect to the server or invalid data: " + error.message);
             console.error("Error during prediction:", error);
         }
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const browserLang = navigator.language.substring(0, 2);
-        if (browserLang === 'th') {
-            setLanguage('th');
-        } else {
-            setLanguage('en');
-        }
-        checkServerStatus();
-    });
 </script>
 </body>
 </html>
