@@ -1,370 +1,606 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>AIDetect - Questionnaire</title>
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f9fcff;
-            color: #333;
-            padding: 40px;
-            margin: 0;
-        }
-        h1 {
-            color: #007c91;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        form {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            max-width: 800px;
-            margin: auto;
-        }
-        .feature-group {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-        }
-        .feature-group h3 {
-            color: #007c91;
-            margin-top: 0;
-            margin-bottom: 0;
-            text-align: left;
-        }
-        .feature-group select, .feature-group label {
-            display: block;
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 14px;
-            background-color: #f9f9f9;
-            cursor: pointer;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .feature-group select:hover {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0,123,255,0.3);
-        }
-        .feature-group select:focus {
-            outline: none;
-            border-color: #0056b3;
-            box-shadow: 0 0 5px rgba(0,86,179,0.5);
-        }
-        .feature-group input[type="checkbox"] {
-            margin-right: 5px;
-        }
-        .feature-group label {
-            border: none;
-            background: none;
-            cursor: pointer;
-            padding: 5px 0;
-            width: fit-content;
-        }
-        button {
-            margin-top: 30px;
-            padding: 12px 24px;
-            background-color: #007c91;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #005f73;
-        }
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-        .modal-overlay.show .modal-content {
-            transform: scale(1);
-        }
-        .modal-content h2 {
-            color: #007c91;
-            margin-top: 0;
-        }
-        .modal-content p {
-            font-size: 18px;
-            margin-bottom: 25px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <title>AIDetect</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f4f8;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #ffffff;
+      color: #007c91;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-title img {
+      height: 65px;
+      width: auto;
+    }
+
+    .header-title h1 {
+      font-size: 28px;
+      margin: 0;
+    }
+
+    .menu-btn {
+      font-size: 26px;
+      background: none;
+      border: none;
+      color: #007c91;
+      cursor: pointer;
+    }
+
+    main {
+      padding: 40px 30px;
+    }
+
+    .main-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+
+    .left-box {
+      font-size: 18px;
+      background-color: #ffffff;
+      flex: 1 1 300px;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 50px;
+      padding-bottom: 25px;
+      justify-content: center;
+      min-height: 300px;
+      position: relative;
+    }
+
+    .start-button {
+      width: 120px;
+      height: 50px;
+      border-radius: 8px;
+      background-color: #007c91;
+      color: white;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 20px; 
+      position: relative; 
+    }
+
+    .start-button:hover {
+      background-color: #007c91;
+    }
+
+    .banner {
+      flex: 1 1 300px;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 300px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .banner-slide {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: all 0.8s ease;
+    }
+
+    .banner-slide.active {
+      left: 0;
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .banner-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .dots {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .dot {
+      display: inline-block;
+      height: 8px;
+      border-radius: 4px;
+      background-color: #ccc;
+      margin: 0 4px;
+      transition: all 0.3s ease;
+      width: 8px;
+    }
+
+    .dot.active {
+      width: 24px;
+      background-color: #90dcff;
+    }
+
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 10px 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      border: none;
+      border-radius: 4px;
+      user-select: none;
+      background-color: rgba(0, 0, 0, 0.3);
+      z-index: 2;
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
+    }
+
+    section {
+      margin-top: 60px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    section h2 {
+      color: #007c91;
+    }
+
+    section p {
+      line-height: 1.6;
+    }
+
+    footer {
+      background-color: #f1f1f1;
+      text-align: center;
+      padding: 12px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      font-size: 14px;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      height: 100vh;
+      width: 300px;
+      background-color: #ffffff;
+      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+      z-index: 1100;
+      transition: right 0.3s ease;
+      padding: 20px;
+      box-sizing: border-box;
+      font-size: 25px;
+    }
+
+    .sidebar.open {
+      right: 0;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background-color: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      display: none;
+      transition: opacity 0.3s ease;
+      z-index: 1050;
+    }
+
+    .overlay.show {
+      display: block;
+      opacity: 1;
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background-color: #ffffff;
+      color: #007c91;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 1200;
+      display: none;
+      transition: all 0.3s ease;
+      max-width: 90%;
+      width: 400px;
+    }
+
+    .popup.show {
+      display: block;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      color: #007c91;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .sidebar-button {
+      background: none;
+      border: none;
+      color: #007c91;
+      font-size: 18px;
+      padding: 10px 0;
+      text-align: left;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .privacy {
+      font-size: 12px;
+      color: #666;
+      text-align: right;
+      margin-top: 20px;
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+    }
+
+    .about-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .about-buttons button {
+      background-color: #007c91;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .main-layout {
+        flex-direction: column;
+      }
+
+      .left-box, .banner {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<h1>Health Information</h1>
+<header>
+  <div class="header-title">
+    <img src="https://github.com/mwllix/aidetect.github.io/blob/main/logo.png?raw=true" alt="Logo" />
+    <h1>AIDetect</h1>
+  </div>
+  <button class="menu-btn" onclick="toggleMenu()">☰</button>
+</header>
 
-<div id="serverStatus" style="position: fixed;bottom: 20px;right: 20px;background-color: rgba(255,255,255,0.9);padding: 8px 12px;border-radius: 8px;box-shadow: 0 2px 8px rgba(0,0,0,0.2);display: flex;align-items: center;z-index: 9999;">
-    <span id="statusLight" style="display:inline-block;width:15px;height:15px;border-radius:50%;background-color:gray;margin-right:8px;"></span>
-    <span id="statusText">Checking server...</span>
-</div>
-
-<form onsubmit="submitForm(event)">
-    <div class="feature-group">
-        <h3>Age</h3>
-        <select name="age">
-            <option value="">Select...</option>
-            <option value="0-1">0-1</option>
-            <option value="5-15">5-15</option>
-            <option value="10-20">10-20</option>
-            <option value="40+">40+</option>
-            <option value="45+">45+</option>
-            <option value="50+">50+</option>
-            <option value="60+">60+</option>
-            <option value="65+">65+</option>
-        </select>
+<main>
+  <div class="main-layout">
+    <div class="left-box">
+      <p>This website is not designed to provide a medically verified diagnosis and may have limited accuracy.
+        If you are experiencing health issues or are worried about your well-being, it is strongly recommended
+        that you consult with a licensed medical professional or a real doctor. This platform is intended solely as an additional,
+        alternative tool for general informational purposes and should not be trusted over professional medical advice, diagnosis, or treatment.</p>
+      <a class="start-button" id="startButton" href="subpage.html">Start</a>
     </div>
 
-    <div class="feature-group">
-        <h3>Urine per Day</h3>
-        <select name="urine">
-            <option value="">Select...</option>
-            <option value="<500">&lt;500</option>
-            <option value="<800">&lt;800</option>
-            <option value="350-550">350-550</option>
-            <option value="800-2000">800-2000</option>
-            <option value="2000-3000">2000-3000</option>
-            <option value=">2000">&gt;2000</option>
-            <option value=">3000">&gt;3000</option>
-        </select>
-    </div>
+    <div class="banner">
+      <div class="banner-slide active"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1024px-Cat_August_2010-4.jpg"></div>
+        <div class="banner-slide"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1024px-Cat_August_2010-4.jpg"></div>
+        <div class="banner-slide"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1024px-Cat_August_2010-4.jpg" alt="Banner 3"></div>
+        <div class="banner-slide"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1024px-Cat_August_2010-4.jpg" alt="Banner 4"></div>
+        <div class="banner-slide"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1024px-Cat_August_2010-4.jpg" alt="Banner 5"></div>
 
-    <div class="feature-group">
-        <h3>Body Mass Index (BMI)</h3>
-        <select name="bmi">
-            <option value="">Select...</option>
-            <option value=">=18.5">&gt;=18.5</option>
-            <option value=">=25">&gt;=25</option>
-            <option value="N/a">N/a</option>
-        </select>
-    </div>
-    
-    <div class="feature-group">
-        <h3>Water Intake</h3>
-        <select name="water">
-            <option value="">Select...</option>
-            <option value="<=2700">&lt;=2700</option>
-            <option value=">=3700">&gt;=3700</option>
-        </select>
-    </div>
+      <div class="dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
 
-    <div class="feature-group">
-        <h3>Blood Pressure</h3>
-        <select name="bp">
-            <option value="">Select...</option>
-            <option value="120/80">120/80</option>
-            <option value=">130/80">&gt;130/80</option>
-            <option value="<130/80">&lt;130/80</option>
-            <option value=">=130/80">&gt;=130/80</option>
-            <option value=">140/80">&gt;140/80</option>
-            <option value="95-145/80">95-145/80</option>
-        </select>
+      <button class="prev" onclick="prevSlide()">❮</button>
+      <button class="next" onclick="nextSlide()">❯</button>
     </div>
+  </div>
 
-    <div class="feature-group">
-        <h3>Mass</h3>
-        <select name="mass">
-            <option value="">Select...</option>
-            <option value="Mass">Mass</option>
-            <option value="Negligible">Negligible</option>
-            <option value="Overweight">Overweight</option>
-        </select>
-    </div>
+  <div class="overlay" id="overlay" onclick="closeAll()"></div>
 
-    <div class="feature-group">
-        <h3>Mass Change</h3>
-        <select name="massChange">
-            <option value="">Select...</option>
-            <option value="M+/-">M+/-</option>
-            <option value="M+7Kg">M+7Kg</option>
-            <option value="-M+7Kg or 10Kg">-M+7Kg or 10Kg</option>
-            <option value="M minus 1Kg">M minus 1Kg</option>
-            <option value="M minus 5Kg">M minus 5Kg</option>
-            <option value="M minus 10Kg">M minus 10Kg</option>
-            <option value="M minus 0.5-1Kg">M minus 0.5-1Kg</option>
-            <option value="<M">&lt;M</option>
-            <option value="No change">No change</option>
-            <option value="Negligible.1">Negligible.1</option>
-        </select>
-    </div>
+  <div class="sidebar" id="sidebar">
+    <h2>Menu</h2>
+    <button class="sidebar-button" onclick="toggleAccount()">Account</button>
+    <button class="sidebar-button" onclick="alert('Settings not yet implemented.')">Settings</button>
+    <button class="sidebar-button" onclick="toggleAboutPopup()">About Us</button>
+    <button class="sidebar-button" onclick="toggleFeedback()">Feedback</button>
+    <button class="sidebar-button privacy" onclick="togglePrivacyPopup()">Privacy Policy</button>
+  </div>
 
-    <div class="feature-group">
-        <h3>Risk Gender</h3>
-        <select name="gender">
-            <option value="">Select...</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-        </select>
-    </div>
-    
-    <div class="feature-group">
-        <h3>Symptoms</h3>
-        <label><input type="checkbox" name="symptoms" value="Wheezing"> Wheezing</label>
-        <label><input type="checkbox" name="symptoms" value="Headache"> Headache</label>
-        <label><input type="checkbox" name="symptoms" value="Short Breaths"> Short Breaths</label>
-        <label><input type="checkbox" name="symptoms" value="Rapid Breathing"> Rapid Breathing</label>
-        <label><input type="checkbox" name="symptoms" value="Anxiety"> Anxiety</label>
-        <label><input type="checkbox" name="symptoms" value="Urine at Night"> Urine at Night</label>
-        <label><input type="checkbox" name="symptoms" value="Irritability"> Irritability</label>
-        <label><input type="checkbox" name="symptoms" value="Blurred Vision"> Blurred Vision</label>
-        <label><input type="checkbox" name="symptoms" value="Slow Healing"> Slow Healing</label>
-        <label><input type="checkbox" name="symptoms" value="Dry Mouth"> Dry Mouth</label>
-        <label><input type="checkbox" name="symptoms" value="Muscle Aches"> Muscle Aches</label>
-        <label><input type="checkbox" name="symptoms" value="Nausea/Vomiting"> Nausea/Vomiting</label>
-        <label><input type="checkbox" name="symptoms" value="Insomnia"> Insomnia</label>
-        <label><input type="checkbox" name="symptoms" value="Chest Pain"> Chest Pain</label>
-        <label><input type="checkbox" name="symptoms" value="Dizziness"> Dizziness</label>
-        <label><input type="checkbox" name="symptoms" value="Nosebleeds"> Nosebleeds</label>
-        <label><input type="checkbox" name="symptoms" value="Foamy Urine"> Foamy Urine</label>
-        <label><input type="checkbox" name="symptoms" value="Abdominal Pain"> Abdominal Pain</label>
-        <label><input type="checkbox" name="symptoms" value="Itchy Skin"> Itchy Skin</label>
-        <label><input type="checkbox" name="symptoms" value="Dark Urine"> Dark Urine</label>
-        <label><input type="checkbox" name="symptoms" value="Bone Pain"> Bone Pain</label>
-    </div>
+  <div class="popup" id="accountPopup">
+    <button class="close-btn" onclick="closeAll()">&times;</button>
+    <h2>ACCOUNT</h2>
+    <p>STILL IN DEVELOPMENT!!</p>
+  </div>
 
-    <button type="submit">Submit</button>
-</form>
+  <div class="popup" id="feedbackPopup">
+    <button class="close-btn" onclick="closeAll()">&times;</button>
+    <h2>Feedback</h2>
+    <textarea rows="5" style="width: 100%; padding: 10px; box-sizing: border-box;"></textarea>
+    <button style="margin-top: 10px; background: #007c91; color: white; border: none; padding: 10px 20px; border-radius: 6px;">Send</button>
+  </div>
 
-<div id="resultModal" class="modal-overlay">
-    <div class="modal-content">
-        <h2 id="modalTitle"></h2>
-        <p id="modalMessage"></p>
-        <button onclick="closeModal()">OK</button>
+  <div class="popup" id="aboutPopup">
+    <button class="close-btn" onclick="closeAll()">&times;</button>
+    <h2>About Us</h2>
+    <div class="about-buttons">
+      <button onclick="scrollToSection('introduction')">Introduction</button>
+      <button onclick="scrollToSection('objectives')">Objectives</button>
+      <button onclick="scrollToSection('process')">Process</button>
+      <button onclick="scrollToSection('how')">How it works</button>
+      <button onclick="scrollToSection('developers')">Developers</button>
     </div>
+  </div>
+
+  <div class="popup" id="privacyPopup">
+    <button class="close-btn" onclick="closeAll()">&times;</button>
+    <h2>Privacy Policy</h2>
+    <p>STILL IN DEVELOPMENT!!</p>
+  </div>
+
+  <section id="about">
+    <h2 id="introduction">Introduction</h2>
+    <p>People are hesitant to visit hospitals due to the high volume of patients who require hospital services.
+      It is also not convenient for many people to visit hospitals. This means they cannot receive a professional diagnosis.
+      They are either very busy or it would take too much time to go to the hospital, so they simply don’t have the time.
+      This leads to neglect of their health, as they are not receiving a trustworthy opinion. This project aims to mitigate the problems
+      stated above by utilizing Artificial Intelligence in the form of a website, providing easy access to assist in diagnosing any underlying
+      health problems these individuals may not be aware of.
+    </p>
+
+    <h2 id="process">Process</h2>
+    <p>1. Read and go through the website’s instructions and details</p>
+    <p>2. Press the "Start" button</p>
+    <p>3. Patients are then required to fill out the information as requested</p>
+    <p>4. Check the filled information and press submit</p>
+    <p>5. The AI will then analyze the information given</p>
+    <p>6. Results will be shown after the AI finishes analyzing</p>
+
+    <h2 id="objectives">Objectives</h2>
+    <p>1. Provide easier access to diagnosis</p>
+    <p>2. Provide an alternative method instead of going to the hospital</p>
+    <p>3. Reduce congestion in hospitals</p>
+    <p>4. Prevent neglect of health</p>
+
+    <h2 id="how">How it works</h2>
+    <p>The AI works by taking the data inputted by the users and analyzing them.
+      These data include age, blood pressure, mass after 1 week, mass before 1 week,
+      urine per day (mL), water intake per day (mL), risk gender (Male/Female/Both), fatigue (Yes/No),
+      edema (Yes/No), confusion (Yes/No), common cold (Yes/No), thirst (Yes/No) + other symptoms</p>
+
+    <h2 id="developers">Developers</h2>
+    <p>Nattanan Singtoroj (Main Inventor and Project Head)</p>
+    <p>Khunut Thewarakphithak (Main Web-developer and Co-researcher)</p>
+    <p>Paulprathai Chandacham (Main Illustrator and Co-researcher)</p>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 AIDetect Research Project
+</footer>
+
+<div id="statusIndicator" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: none; background-color: white; padding: 8px 12px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+  <span id="statusText" style="color: #333; margin-right: 10px;">Waking up server...</span>
+  <span id="statusLight" style="width: 15px; height: 15px; border-radius: 50%; background-color: gray; display: inline-block;"></span>
 </div>
 
 <script>
-    const API_ENDPOINT = "https://aidetect-github-io.onrender.com";
+  let slideIndex = 0;
+  const slides = document.querySelectorAll('.banner-slide');
+  const dots = document.querySelectorAll('.dot');
 
-    const statusText = document.getElementById("statusText");
-    const statusLight = document.getElementById("statusLight");
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.remove('active');
+      dots[i].classList.remove('active');
+    });
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+  }
+
+  function nextSlide() {
+    slideIndex = (slideIndex + 1) % slides.length;
+    showSlide(slideIndex);
+  }
+
+  function prevSlide() {
+    slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+    showSlide(slideIndex);
+  }
+
+  setInterval(nextSlide, 4000);
+
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  const popup = document.getElementById("accountPopup");
+  const privacyPopup = document.getElementById("privacyPopup");
+  const feedbackPopup = document.getElementById("feedbackPopup");
+  const aboutPopup = document.getElementById("aboutPopup");
+
+  function toggleMenu() {
+    if (sidebar.classList.contains("open")) {
+      closeAll();
+    } else {
+      sidebar.classList.add("open");
+      showOverlay();
+    }
+  }
+
+  function togglePrivacyPopup() {
+    privacyPopup.classList.add("show");
+    showOverlay();
+  }
+
+  function toggleAccount() {
+    popup.classList.add("show");
+    showOverlay();
+  }
+
+  function toggleFeedback() {
+    feedbackPopup.classList.add("show");
+    showOverlay();
+  }
+
+  function toggleAboutPopup() {
+    aboutPopup.classList.add("show");
+    showOverlay();
+  }
+
+  function scrollToSection(id) {
+    closeAll();
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function showOverlay() {
+    overlay.style.display = "block";
+    requestAnimationFrame(() => {
+      overlay.classList.add("show");
+    });
+  }
+
+  function closeAll() {
+    sidebar.classList.remove("open");
+    popup.classList.remove("show");
+    feedbackPopup.classList.remove("show");
+    aboutPopup.classList.remove("show");
+    privacyPopup.classList.remove("show");
+    overlay.classList.remove("show");
+    overlay.addEventListener("transitionend", () => {
+      if (!overlay.classList.contains("show")) {
+        overlay.style.display = "none";
+      }
+    }, { once: true });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const startButton = document.getElementById('startButton');
+    const statusIndicator = document.getElementById('statusIndicator');
+    const statusText = document.getElementById('statusText');
+    const statusLight = document.getElementById('statusLight');
+    const API_ENDPOINT = 'https://aidetect-github-io.onrender.com';
+
+    statusIndicator.style.display = 'flex';
+    startButton.style.display = 'none';
+
+    async function wakeUpServer() {
+      statusText.innerText = 'Waking up server...';
+      statusLight.style.backgroundColor = 'gray';
+
+      try {
+        const response = await fetch(`${API_ENDPOINT}/api/wakeup`, { method: 'GET' });
+        if (response.ok) {
+          setTimeout(checkServerStatus, 5000);
+        } else {
+          statusText.innerText = 'Error waking up the server';
+          statusLight.style.backgroundColor = 'red';
+        }
+      } catch (error) {
+        statusText.innerText = 'Unable to connect';
+        statusLight.style.backgroundColor = 'red';
+        console.error('Error sending wake-up command:', error);
+      }
+    }
 
     async function checkServerStatus() {
-        try {
-            const response = await fetch(${API_ENDPOINT}/api/status, { method: 'GET' });
-            const data = await response.json();
+      try {
+        const response = await fetch(`${API_ENDPOINT}/api/status`, { method: 'GET' });
+        const data = await response.json();
 
-            if (data.status === "online") {
-                statusText.innerText = "Online";
-                statusLight.style.backgroundColor = "green";
-            } else {
-                statusText.innerText = "Waiting for server...";
-                statusLight.style.backgroundColor = "orange";
-                setTimeout(checkServerStatus, 5000);
-            }
-        } catch (error) {
-            statusText.innerText = "Cannot connect to server";
-            statusLight.style.backgroundColor = "red";
-            console.error("Error fetching server status:", error);
-            setTimeout(checkServerStatus, 5000);
+        if (data.status === 'online') {
+          statusText.innerText = 'Online';
+          statusLight.style.backgroundColor = 'green';
+          startButton.style.display = 'flex';
+        } else {
+          statusText.innerText = 'Waiting for server...';
+          setTimeout(checkServerStatus, 5000);
         }
+      } catch (error) {
+        statusText.innerText = 'Waiting for server...';
+        setTimeout(checkServerStatus, 5000);
+        console.error('Error fetching server status:', error);
+      }
     }
-    checkServerStatus();
+
+    wakeUpServer();
+  });
 </script>
 
-<script>
-    function showModal(title, message) {
-        const modal = document.getElementById("resultModal");
-        document.getElementById("modalTitle").innerText = title;
-        document.getElementById("modalMessage").innerText = message;
-        modal.classList.add("show");
-    }
-
-    function closeModal() {
-        const modal = document.getElementById("resultModal");
-        modal.classList.remove("show");
-    }
-
-    async function submitForm(event) {
-        event.preventDefault();
-
-        const data62Features = {
-            "0-1": 0, "5-15": 0, "10-20": 0, "40+": 0, "45+": 0, "50+": 0, "60+": 0, "65+": 0,
-            "<500": 0, "<800": 0, "350-550": 0, "800-2000": 0, "2000-3000": 0, ">2000": 0, ">3000": 0,
-            ">=18.5": 0, ">=25": 0, "N/a": 0, "<=2700": 0, ">=3700": 0, "120/80": 0, ">130/80": 0,
-            "<130/80": 0, ">=130/80": 0, ">140/80": 0, "95-145/80": 0, "Mass": 0, "Negligible": 0,
-            "Overweight": 0, "M+/-": 0, "M+7Kg": 0, "-M+7Kg or 10Kg": 0, "M minus 1Kg": 0,
-            "M minus 5Kg": 0, "M minus 10Kg": 0, "M minus 0.5-1Kg": 0, "<M": 0, "No change": 0,
-            "Negligible.1": 0, "Male": 0, "Female": 0, "Wheezing": 0, "Headache": 0,
-            "Short Breaths": 0, "Rapid Breathing": 0, "Anxiety": 0, "Urine at Night": 0,
-            "Irritability": 0, "Blurred Vision": 0, "Slow Healing": 0, "Dry Mouth": 0,
-            "Muscle Aches": 0, "Nausea/Vomiting": 0, "Insomnia": 0, "Chest Pain": 0,
-            "Dizziness": 0, "Nosebleeds": 0, "Foamy Urine": 0, "Abdominal Pain": 0,
-            "Itchy Skin": 0, "Dark Urine": 0, "Bone Pain": 0
-        };
-
-        // Process all dropdowns
-        const selects = document.querySelectorAll('select');
-        selects.forEach(select => {
-            if (select.value && data62Features.hasOwnProperty(select.value)) {
-                data62Features[select.value] = 1;
-            }
-        });
-
-        // Process all checkboxes (Symptoms)
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(checkbox => {
-            if (checkbox.checked && data62Features.hasOwnProperty(checkbox.value)) {
-                data62Features[checkbox.value] = 1;
-            }
-        });
-
-        try {
-            const response = await fetch("https://aidetect-github-io.onrender.com/predict", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data62Features)
-            });
-
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(HTTP error! status: ${response.status}, message: ${errorText});
-            }
-
-            const result = await response.json();
-            showModal("Analysis Result", "Predicted Disease: " + result.prediction);
-
-        } catch (error) {
-            showModal("Error", "Could not connect to the server or invalid data: " + error.message);
-            console.error("Error during prediction:", error);
-        }
-    }
-</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
