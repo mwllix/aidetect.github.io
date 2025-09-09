@@ -1,60 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIDetect</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>AIDetect - Questionnaire</title>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f0f4f7;
+            background-color: #f9fcff;
             color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 900px;
-            background-color: white;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin: 20px auto;
+            margin: 0;
         }
-
-        header {
+        .subpage-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 2px solid #eee;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
             margin-bottom: 20px;
-            position: relative;
+            border-radius: 12px;
+            max-width: 800px;
+            margin: auto;
+            margin-bottom: 20px;
         }
-        
-        .header-title {
-            display: flex;
-            align-items: center;
-        }
-
-        .header-title img {
-            height: 40px;
-            margin-right: 15px;
-        }
-        
-        .header-title h1 {
-            margin: 0;
-            color: #007c91;
-            font-size: 2em;
-        }
-
         .lang-btn {
             font-size: 16px;
             background-color: #007c91;
@@ -63,479 +34,496 @@
             padding: 8px 12px;
             border-radius: 6px;
             cursor: pointer;
-            margin-right: 10px;
         }
-
-        .menu-btn {
-            font-size: 24px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #333;
-        }
-
-        .sidebar {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: #111;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-        }
-
-        .sidebar a {
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 20px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-        }
-
-        .sidebar a:hover {
-            color: #f1f1f1;
-        }
-
-        .sidebar .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
-        
-        .menu-separator {
-            height: 1px;
-            background-color: #444;
-            margin: 10px 0;
-        }
-
-        .disclaimer-box {
-            background-color: #ffcccc;
-            border-left: 5px solid #ff0000;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .disclaimer-box p {
+        h1 {
+            color: #007c91;
+            text-align: center;
             margin: 0;
-            font-size: 1.1em;
-            color: #d60000;
+            font-size: 1.5em;
         }
-
-        .start-button {
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        .feature-group {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .feature-group h3 {
+            color: #007c91;
+            margin-top: 0;
+            margin-bottom: 0;
+            text-align: left;
+        }
+        .feature-group select, .feature-group label {
             display: block;
             width: 100%;
-            max-width: 300px;
-            margin: 30px auto;
-            padding: 15px 25px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .feature-group select:hover {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0,123,255,0.3);
+        }
+        .feature-group select:focus {
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 5px rgba(0,86,179,0.5);
+        }
+        .feature-group input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .feature-group label {
+            border: none;
+            background: none;
+            cursor: pointer;
+            padding: 5px 0;
+            width: fit-content;
+        }
+        button {
+            margin-top: 30px;
+            padding: 12px 24px;
             background-color: #007c91;
             color: white;
-            text-align: center;
-            text-decoration: none;
+            border: none;
             border-radius: 8px;
-            font-size: 1.2em;
-            transition: background-color 0.3s ease;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
         }
-
-        .start-button:hover {
+        button:hover {
             background-color: #005f73;
         }
-
-        .section {
-            margin-top: 40px;
-        }
-
-        .section h2 {
-            color: #007c91;
-            font-size: 1.8em;
-            border-bottom: 2px solid #007c91;
-            padding-bottom: 5px;
-            margin-bottom: 20px;
-        }
-
-        .section h3 {
-            color: #005f73;
-            font-size: 1.4em;
-            margin-top: 20px;
-        }
-
-        .section p, .section li {
-            line-height: 1.6;
-            color: #555;
-        }
-
-        .dev-list {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .dev-list li {
-            font-size: 1.1em;
-            margin-bottom: 10px;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #ccc;
-            font-size: 0.9em;
-            color: #888;
-        }
-
-        .modal {
-            display: none;
+        .modal-overlay {
             position: fixed;
-            z-index: 1000;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-            padding-top: 60px;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
         .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
+            background-color: white;
+            padding: 30px;
             border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             text-align: center;
-            animation: slideIn 0.5s ease-out;
+            max-width: 400px;
+            width: 90%;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
         }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        .modal-overlay.show .modal-content {
+            transform: scale(1);
         }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
+        .modal-content h2 {
+            color: #007c91;
+            margin-top: 0;
         }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
+        .modal-content p {
+            font-size: 18px;
+            margin-bottom: 25px;
         }
     </style>
 </head>
 <body>
 
-    <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
-        <a href="#" onclick="showAccount()" data-translate="account">Account</a>
-        <a href="#" onclick="showSettings()" data-translate="settings">Settings</a>
-        <div class="menu-separator"></div>
-        <a href="#about-us" data-translate="aboutUs">About Us</a>
-        <a href="#" onclick="showFeedback()" data-translate="feedback">Feedback</a>
-        <a href="#" onclick="showPrivacy()" data-translate="privacyPolicy">Privacy Policy</a>
+<div class="subpage-header">
+    <h1 data-translate="pageTitle">Health Information</h1>
+    <button id="lang-toggle" class="lang-btn" onclick="toggleLanguage()">TH</button>
+</div>
+
+<div id="serverStatus" style="position: fixed;bottom: 20px;right: 20px;background-color: rgba(255,255,255,0.9);padding: 8px 12px;border-radius: 8px;box-shadow: 0 2px 8px rgba(0,0,0,0.2);display: flex;align-items: center;z-index: 9999;">
+    <span id="statusLight" style="display:inline-block;width:15px;height:15px;border-radius:50%;background-color:gray;margin-right:8px;"></span>
+    <span id="statusText" data-translate="statusChecking">Checking server...</span>
+</div>
+
+<form onsubmit="submitForm(event)">
+    <div class="feature-group">
+        <h3 data-translate="age">Age</h3>
+        <select name="age">
+            <option value="" data-translate="select">Select...</option>
+            <option value="0-1">0-1</option>
+            <option value="5-15">5-15</option>
+            <option value="10-20">10-20</option>
+            <option value="40+">40+</option>
+            <option value="45+">45+</option>
+            <option value="50+">50+</option>
+            <option value="60+">60+</option>
+            <option value="65+">65+</option>
+        </select>
     </div>
 
-    <div class="container">
-        <header>
-            <div class="header-title">
-                <img src="https://github.com/mwllix/aidetect.github.io/blob/main/logo.png?raw=true" alt="Logo" />
-                <h1 data-translate="headerTitle">AIDetect</h1>
-            </div>
-            <div style="display: flex; align-items: center;">
-                <button id="lang-toggle" class="lang-btn" onclick="toggleLanguage()">TH</button>
-                <button class="menu-btn" onclick="toggleMenu()">☰</button>
-            </div>
-        </header>
-
-        <div class="disclaimer-box">
-            <p data-translate="disclaimer">This website is not designed to provide a medically verified diagnosis and may have limited accuracy. If you are experiencing health issues or are worried about your well-being, it is strongly recommended that you consult with a licensed medical professional or a real doctor. This platform is intended solely as an additional, alternative tool for general informational purposes and should not be trusted over professional medical advice, diagnosis, or treatment.</p>
-        </div>
-
-        <a class="start-button" href="subpage.html" data-translate="startButton">Start</a>
-        
-        <div class="section" id="about-us">
-            <h2 data-translate="aboutUsTitle">About Us</h2>
-            <div style="display: flex; justify-content: center; margin-bottom: 20px;">
-                <button class="about-btn" onclick="showIntro()" data-translate="introButton">Introduction</button>
-                <button class="about-btn" onclick="showObjectives()" data-translate="objectivesButton">Objectives</button>
-                <button class="about-btn" onclick="showProcess()" data-translate="processButton">Process</button>
-                <button class="about-btn" onclick="showHowItWorks()" data-translate="howItWorksButton">How it works</button>
-                <button class="about-btn" onclick="showDevelopers()" data-translate="developersButton">Developers</button>
-            </div>
-
-            <div id="intro-content" class="about-content">
-                <h3 data-translate="introductionTitle">Introduction</h3>
-                <p data-translate="introductionText">People are hesitant to visit hospitals due to the high volume of patients who require hospital services. It is also not convenient for many people to visit hospitals. This means they cannot receive a professional diagnosis. They are either very busy or it would take too much time to go to the hospital, so they simply don’t have the time. This leads to neglect of their health, as they are not receiving a trustworthy opinion. This project aims to mitigate the problems stated above by utilizing Artificial Intelligence in the form of a website, providing easy access to assist in diagnosing any underlying health problems these individuals may not be aware of.</p>
-            </div>
-            
-            <div id="objectives-content" class="about-content" style="display: none;">
-                <h3 data-translate="objectivesTitle">Objectives</h3>
-                <ul class="dev-list">
-                    <li data-translate="objective1">1. Provide easier access to diagnosis</li>
-                    <li data-translate="objective2">2. Provide an alternative method instead of going to the hospital</li>
-                    <li data-translate="objective3">3. Reduce congestion in hospitals</li>
-                    <li data-translate="objective4">4. Prevent neglect of health</li>
-                </ul>
-            </div>
-            
-            <div id="process-content" class="about-content" style="display: none;">
-                <h3 data-translate="processTitle">Process</h3>
-                <ul class="dev-list">
-                    <li data-translate="processStep1">1. Read and go through the website’s instructions and details</li>
-                    <li data-translate="processStep2">2. Press the 'Start' button</li>
-                    <li data-translate="processStep3">3. Patients are then required to fill out the information as requested</li>
-                    <li data-translate="processStep4">4. Check the filled information and press submit</li>
-                    <li data-translate="processStep5">5. The AI will then analyze the information given</li>
-                    <li data-translate="processStep6">6. Results will be shown after the AI finishes analyzing</li>
-                </ul>
-            </div>
-            
-            <div id="howitworks-content" class="about-content" style="display: none;">
-                <h3 data-translate="howItWorksTitle">How it works</h3>
-                <p data-translate="howItWorksText">The AI works by taking the data inputted by the users and analyzing them. These data include age, blood pressure, mass after 1 week, mass before 1 week, urine per day (mL), water intake per day (mL), risk gender (Male/Female/Both), fatigue (Yes/No), edema (Yes/No), confusion (Yes/No), common cold (Yes/No), thirst (Yes/No) + other symptoms</p>
-            </div>
-            
-            <div id="developers-content" class="about-content" style="display: none;">
-                <h3 data-translate="developersTitle">Developers</h3>
-                <ul class="dev-list">
-                    <li data-translate="developersText1">Nattanan Singtoroj (Main Inventor and Project Head)</li>
-                    <li data-translate="developersText2">Khunut Thewarakphithak (Main Web-developer and Co-researcher)</li>
-                    <li data-translate="developersText3">Paulprathai Chandacham (Main Illustrator and Co-researcher)</li>
-                </ul>
-            </div>
-        </div>
-
-        <footer>
-            <p data-translate="footer">&copy; 2025 AIDetect Research Project</p>
-        </footer>
+    <div class="feature-group">
+        <h3 data-translate="urine">Urine per Day</h3>
+        <select name="urine">
+            <option value="" data-translate="select">Select...</option>
+            <option value="<500">&lt;500</option>
+            <option value="<800">&lt;800</option>
+            <option value="350-550">350-550</option>
+            <option value="800-2000">800-2000</option>
+            <option value="2000-3000">2000-3000</option>
+            <option value=">2000">&gt;2000</option>
+            <option value=">3000">&gt;3000</option>
+        </select>
     </div>
 
-    <div id="accountModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 data-translate="accountPopup">ACCOUNT</h2>
-            <p data-translate="accountDev">STILL IN DEVELOPMENT!!</p>
-        </div>
+    <div class="feature-group">
+        <h3 data-translate="bmi">Body Mass Index (BMI)</h3>
+        <select name="bmi">
+            <option value="" data-translate="select">Select...</option>
+            <option value=">=18.5">&gt;=18.5</option>
+            <option value=">=25">&gt;=25</option>
+            <option value="N/a">N/a</option>
+        </select>
+    </div>
+    
+    <div class="feature-group">
+        <h3 data-translate="water">Water Intake</h3>
+        <select name="water">
+            <option value="" data-translate="select">Select...</option>
+            <option value="<=2700">&lt;=2700</option>
+            <option value=">=3700">&gt;=3700</option>
+        </select>
     </div>
 
-    <div id="settingsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 data-translate="settings">Settings</h2>
-            <p data-translate="settingsDev">STILL IN DEVELOPMENT!!</p>
-        </div>
+    <div class="feature-group">
+        <h3 data-translate="bp">Blood Pressure</h3>
+        <select name="bp">
+            <option value="" data-translate="select">Select...</option>
+            <option value="120/80">120/80</option>
+            <option value=">130/80">&gt;130/80</option>
+            <option value="<130/80">&lt;130/80</option>
+            <option value=">=130/80">&gt;=130/80</option>
+            <option value=">140/80">&gt;140/80</option>
+            <option value="95-145/80">95-145/80</option>
+        </select>
     </div>
 
-    <div id="feedbackModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 data-translate="feedbackTitle">Feedback</h2>
-            <p>
-                <textarea rows="5" style="width: 100%;"></textarea>
-                <button data-translate="sendButton">Send</button>
-            </p>
-        </div>
+    <div class="feature-group">
+        <h3 data-translate="mass">Mass</h3>
+        <select name="mass">
+            <option value="" data-translate="select">Select...</option>
+            <option value="Mass">Mass</option>
+            <option value="Negligible">Negligible</option>
+            <option value="Overweight">Overweight</option>
+        </select>
     </div>
 
-    <div id="privacyModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 data-translate="privacyTitle">Privacy Policy</h2>
-            <p data-translate="privacyDev">STILL IN DEVELOPMENT!!</p>
-        </div>
+    <div class="feature-group">
+        <h3 data-translate="massChange">Mass Change</h3>
+        <select name="massChange">
+            <option value="" data-translate="select">Select...</option>
+            <option value="M+/-">M+/-</option>
+            <option value="M+7Kg">M+7Kg</option>
+            <option value="-M+7Kg or 10Kg">-M+7Kg or 10Kg</option>
+            <option value="M minus 1Kg">M minus 1Kg</option>
+            <option value="M minus 5Kg">M minus 5Kg</option>
+            <option value="M minus 10Kg">M minus 10Kg</option>
+            <option value="M minus 0.5-1Kg">M minus 0.5-1Kg</option>
+            <option value="<M">&lt;M</option>
+            <option value="No change">No change</option>
+            <option value="Negligible.1">Negligible.1</option>
+        </select>
     </div>
 
-    <script>
-        // About Us section buttons
-        function showIntro() { showAboutContent('intro-content'); }
-        function showObjectives() { showAboutContent('objectives-content'); }
-        function showProcess() { showAboutContent('process-content'); }
-        function showHowItWorks() { showAboutContent('howitworks-content'); }
-        function showDevelopers() { showAboutContent('developers-content'); }
+    <div class="feature-group">
+        <h3 data-translate="gender">Risk Gender</h3>
+        <select name="gender">
+            <option value="" data-translate="select">Select...</option>
+            <option value="Male" data-translate="male">Male</option>
+            <option value="Female" data-translate="female">Female</option>
+        </select>
+    </div>
+    
+    <div class="feature-group">
+        <h3 data-translate="symptoms">Symptoms</h3>
+        <label><input type="checkbox" name="symptoms" value="Wheezing"> <span data-translate="wheezing">Wheezing</span></label>
+        <label><input type="checkbox" name="symptoms" value="Headache"> <span data-translate="headache">Headache</span></label>
+        <label><input type="checkbox" name="symptoms" value="Short Breaths"> <span data-translate="shortBreaths">Short Breaths</span></label>
+        <label><input type="checkbox" name="symptoms" value="Rapid Breathing"> <span data-translate="rapidBreathing">Rapid Breathing</span></label>
+        <label><input type="checkbox" name="symptoms" value="Anxiety"> <span data-translate="anxiety">Anxiety</span></label>
+        <label><input type="checkbox" name="symptoms" value="Urine at Night"> <span data-translate="urineAtNight">Urine at Night</span></label>
+        <label><input type="checkbox" name="symptoms" value="Irritability"> <span data-translate="irritability">Irritability</span></label>
+        <label><input type="checkbox" name="symptoms" value="Blurred Vision"> <span data-translate="blurredVision">Blurred Vision</span></label>
+        <label><input type="checkbox" name="symptoms" value="Slow Healing"> <span data-translate="slowHealing">Slow Healing</span></label>
+        <label><input type="checkbox" name="symptoms" value="Dry Mouth"> <span data-translate="dryMouth">Dry Mouth</span></label>
+        <label><input type="checkbox" name="symptoms" value="Muscle Aches"> <span data-translate="muscleAches">Muscle Aches</span></label>
+        <label><input type="checkbox" name="symptoms" value="Nausea/Vomiting"> <span data-translate="nauseaVomiting">Nausea/Vomiting</span></label>
+        <label><input type="checkbox" name="symptoms" value="Insomnia"> <span data-translate="insomnia">Insomnia</span></label>
+        <label><input type="checkbox" name="symptoms" value="Chest Pain"> <span data-translate="chestPain">Chest Pain</span></label>
+        <label><input type="checkbox" name="symptoms" value="Dizziness"> <span data-translate="dizziness">Dizziness</span></label>
+        <label><input type="checkbox" name="symptoms" value="Nosebleeds"> <span data-translate="nosebleeds">Nosebleeds</span></label>
+        <label><input type="checkbox" name="symptoms" value="Foamy Urine"> <span data-translate="foamyUrine">Foamy Urine</span></label>
+        <label><input type="checkbox" name="symptoms" value="Abdominal Pain"> <span data-translate="abdominalPain">Abdominal Pain</span></label>
+        <label><input type="checkbox" name="symptoms" value="Itchy Skin"> <span data-translate="itchySkin">Itchy Skin</span></label>
+        <label><input type="checkbox" name="symptoms" value="Dark Urine"> <span data-translate="darkUrine">Dark Urine</span></label>
+        <label><input type="checkbox" name="symptoms" value="Bone Pain"> <span data-translate="bonePain">Bone Pain</span></label>
+    </div>
 
-        function showAboutContent(id) {
-            const contents = document.querySelectorAll('.about-content');
-            contents.forEach(content => {
-                content.style.display = 'none';
-            });
-            document.getElementById(id).style.display = 'block';
+    <button type="submit" data-translate="submit">Submit</button>
+</form>
+
+<div id="resultModal" class="modal-overlay">
+    <div class="modal-content">
+        <h2 id="modalTitle"></h2>
+        <p id="modalMessage"></p>
+        <button onclick="closeModal()" data-translate="modalOk">OK</button>
+    </div>
+</div>
+
+<script>
+    const API_ENDPOINT = "https://aidetect-github-io.onrender.com";
+
+    // --- Translations ---
+    const translations = {
+        en: {
+            pageTitle: "Health Information",
+            age: "Age",
+            urine: "Urine per Day",
+            bmi: "Body Mass Index (BMI)",
+            water: "Water Intake",
+            bp: "Blood Pressure",
+            mass: "Mass",
+            massChange: "Mass Change",
+            gender: "Risk Gender",
+            symptoms: "Symptoms",
+            select: "Select...",
+            male: "Male",
+            female: "Female",
+            wheezing: "Wheezing",
+            headache: "Headache",
+            shortBreaths: "Short Breaths",
+            rapidBreathing: "Rapid Breathing",
+            anxiety: "Anxiety",
+            urineAtNight: "Urine at Night",
+            irritability: "Irritability",
+            blurredVision: "Blurred Vision",
+            slowHealing: "Slow Healing",
+            dryMouth: "Dry Mouth",
+            muscleAches: "Muscle Aches",
+            nauseaVomiting: "Nausea/Vomiting",
+            insomnia: "Insomnia",
+            chestPain: "Chest Pain",
+            dizziness: "Dizziness",
+            nosebleeds: "Nosebleeds",
+            foamyUrine: "Foamy Urine",
+            abdominalPain: "Abdominal Pain",
+            itchySkin: "Itchy Skin",
+            darkUrine: "Dark Urine",
+            bonePain: "Bone Pain",
+            submit: "Submit",
+            statusChecking: "Checking server...",
+            statusOnline: "Online",
+            statusWaiting: "Waiting for server...",
+            statusError: "Cannot connect to server",
+            modalTitleResult: "Analysis Result",
+            modalTitleError: "Error",
+            modalMessagePrediction: "Predicted Disease: ",
+            modalMessageError: "Could not connect to the server or invalid data: ",
+            modalOk: "OK"
+        },
+        th: {
+            pageTitle: "ข้อมูลสุขภาพ",
+            age: "อายุ",
+            urine: "ปัสสาวะต่อวัน",
+            bmi: "ดัชนีมวลกาย (BMI)",
+            water: "ปริมาณน้ำที่ดื่ม",
+            bp: "ความดันโลหิต",
+            mass: "มวลร่างกาย",
+            massChange: "การเปลี่ยนแปลงของมวลร่างกาย",
+            gender: "เพศที่มีความเสี่ยง",
+            symptoms: "อาการ",
+            select: "เลือก...",
+            male: "ชาย",
+            female: "หญิง",
+            wheezing: "หายใจมีเสียงหวีด",
+            headache: "ปวดศีรษะ",
+            shortBreaths: "หายใจถี่",
+            rapidBreathing: "หายใจเร็ว",
+            anxiety: "ความวิตกกังวล",
+            urineAtNight: "ปัสสาวะตอนกลางคืน",
+            irritability: "หงุดหงิดง่าย",
+            blurredVision: "ตาพร่ามัว",
+            slowHealing: "แผลหายช้า",
+            dryMouth: "ปากแห้ง",
+            muscleAches: "ปวดเมื่อยกล้ามเนื้อ",
+            nauseaVomiting: "คลื่นไส้/อาเจียน",
+            insomnia: "นอนไม่หลับ",
+            chestPain: "เจ็บหน้าอก",
+            dizziness: "วิงเวียนศีรษะ",
+            nosebleeds: "เลือดกำเดาไหล",
+            foamyUrine: "ปัสสาวะเป็นฟอง",
+            abdominalPain: "ปวดท้อง",
+            itchySkin: "ผิวหนังคัน",
+            darkUrine: "ปัสสาวะสีเข้ม",
+            bonePain: "ปวดกระดูก",
+            submit: "ส่งข้อมูล",
+            statusChecking: "กำลังตรวจสอบเซิร์ฟเวอร์...",
+            statusOnline: "ออนไลน์",
+            statusWaiting: "กำลังรอเซิร์ฟเวอร์...",
+            statusError: "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์",
+            modalTitleResult: "ผลการวิเคราะห์",
+            modalTitleError: "ข้อผิดพลาด",
+            modalMessagePrediction: "โรคที่คาดการณ์: ",
+            modalMessageError: "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์หรือข้อมูลไม่ถูกต้อง: ",
+            modalOk: "ตกลง"
         }
-
-        // Side menu functions
-        function toggleMenu() {
-            const sidebar = document.getElementById("mySidebar");
-            if (sidebar.style.width === "250px") {
-                sidebar.style.width = "0";
-            } else {
-                sidebar.style.width = "250px";
-            }
-        }
-        function closeMenu() {
-            document.getElementById("mySidebar").style.width = "0";
-        }
-
-        // Modal functions
-        let currentModal;
-        function showModal(id) {
-            closeMenu();
-            currentModal = document.getElementById(id);
-            currentModal.style.display = "block";
-        }
-        function closeModal() {
-            if (currentModal) {
-                currentModal.style.display = "none";
-            }
-        }
-        window.onclick = function(event) {
-            if (event.target === currentModal) {
-                closeModal();
-            }
-        };
-
-        function showAccount() { showModal('accountModal'); }
-        function showSettings() { showModal('settingsModal'); }
-        function showFeedback() { showModal('feedbackModal'); }
-        function showPrivacy() { showModal('privacyModal'); }
-
-        // Language toggle functions
-        const translations = {
-            en: {
-                headerTitle: "AIDetect",
-                disclaimer: "This website is not designed to provide a medically verified diagnosis and may have limited accuracy. If you are experiencing health issues or are worried about your well-being, it is strongly recommended that you consult with a licensed medical professional or a real doctor. This platform is intended solely as an additional, alternative tool for general informational purposes and should not be trusted over professional medical advice, diagnosis, or treatment.",
-                startButton: "Start",
-                account: "Account",
-                settings: "Settings",
-                aboutUs: "About Us",
-                feedback: "Feedback",
-                privacyPolicy: "Privacy Policy",
-                accountPopup: "ACCOUNT",
-                accountDev: "STILL IN DEVELOPMENT!!",
-                settingsDev: "STILL IN DEVELOPMENT!!",
-                feedbackTitle: "Feedback",
-                sendButton: "Send",
-                aboutUsTitle: "About Us",
-                introButton: "Introduction",
-                objectivesButton: "Objectives",
-                processButton: "Process",
-                howItWorksButton: "How it works",
-                developersButton: "Developers",
-                privacyTitle: "Privacy Policy",
-                privacyDev: "STILL IN DEVELOPMENT!!",
-                introductionTitle: "Introduction",
-                introductionText: "People are hesitant to visit hospitals due to the high volume of patients who require hospital services. It is also not convenient for many people to visit hospitals. This means they cannot receive a professional diagnosis. They are either very busy or it would take too much time to go to the hospital, so they simply don’t have the time. This leads to neglect of their health, as they are not receiving a trustworthy opinion. This project aims to mitigate the problems stated above by utilizing Artificial Intelligence in the form of a website, providing easy access to assist in diagnosing any underlying health problems these individuals may not be aware of.",
-                processTitle: "Process",
-                processStep1: "1. Read and go through the website’s instructions and details",
-                processStep2: "2. Press the 'Start' button",
-                processStep3: "3. Patients are then required to fill out the information as requested",
-                processStep4: "4. Check the filled information and press submit",
-                processStep5: "5. The AI will then analyze the information given",
-                processStep6: "6. Results will be shown after the AI finishes analyzing",
-                objectivesTitle: "Objectives",
-                objective1: "1. Provide easier access to diagnosis",
-                objective2: "2. Provide an alternative method instead of going to the hospital",
-                objective3: "3. Reduce congestion in hospitals",
-                objective4: "4. Prevent neglect of health",
-                howItWorksTitle: "How it works",
-                howItWorksText: "The AI works by taking the data inputted by the users and analyzing them. These data include age, blood pressure, mass after 1 week, mass before 1 week, urine per day (mL), water intake per day (mL), risk gender (Male/Female/Both), fatigue (Yes/No), edema (Yes/No), confusion (Yes/No), common cold (Yes/No), thirst (Yes/No) + other symptoms",
-                developersTitle: "Developers",
-                developersText1: "Nattanan Singtoroj (Main Inventor and Project Head)",
-                developersText2: "Khunut Thewarakphithak (Main Web-developer and Co-researcher)",
-                developersText3: "Paulprathai Chandacham (Main Illustrator and Co-researcher)",
-                footer: "© 2025 AIDetect Research Project"
-            },
-            th: {
-                headerTitle: "AIDetect",
-                disclaimer: "เว็บไซต์นี้ไม่ได้ถูกออกแบบมาเพื่อใช้ในการวินิจฉัยทางการแพทย์ และอาจมีความแม่นยำจำกัด หากคุณกำลังประสบปัญหาด้านสุขภาพหรือเป็นกังวลเกี่ยวกับความเป็นอยู่ที่ดีของคุณ ขอแนะนำอย่างยิ่งให้ปรึกษาผู้เชี่ยวชาญทางการแพทย์ที่มีใบอนุญาตหรือแพทย์จริง แพลตฟอร์มนี้มีวัตถุประสงค์เพื่อใช้เป็นเครื่องมือเพิ่มเติมสำหรับข้อมูลทั่วไปเท่านั้น และไม่ควรเชื่อถือเหนือคำแนะนำ การวินิจฉัย หรือการรักษาทางการแพทย์จากผู้เชี่ยวชาญ",
-                startButton: "เริ่ม",
-                account: "บัญชี",
-                settings: "ตั้งค่า",
-                aboutUs: "เกี่ยวกับเรา",
-                feedback: "ข้อเสนอแนะ",
-                privacyPolicy: "นโยบายความเป็นส่วนตัว",
-                accountPopup: "บัญชี",
-                accountDev: "ยังอยู่ระหว่างการพัฒนา!!",
-                settingsDev: "ยังอยู่ระหว่างการพัฒนา!!",
-                feedbackTitle: "ข้อเสนอแนะ",
-                sendButton: "ส่ง",
-                aboutUsTitle: "เกี่ยวกับเรา",
-                introButton: "บทนำ",
-                objectivesButton: "วัตถุประสงค์",
-                processButton: "กระบวนการ",
-                howItWorksButton: "วิธีการทำงาน",
-                developersButton: "ผู้พัฒนา",
-                privacyTitle: "นโยบายความเป็นส่วนตัว",
-                privacyDev: "ยังอยู่ระหว่างการพัฒนา!!",
-                introductionTitle: "บทนำ",
-                introductionText: "ผู้คนไม่กล้าไปโรงพยาบาลเนื่องจากมีผู้ป่วยจำนวนมากที่ต้องการบริการจากโรงพยาบาล นอกจากนี้ยังไม่สะดวกสำหรับหลายๆ คนที่จะไปโรงพยาบาล นั่นหมายความว่าพวกเขาไม่ได้รับการวินิจฉัยจากมืออาชีพ พวกเขาอาจจะยุ่งเกินไปหรือใช้เวลามากเกินไปในการไปโรงพยาบาล ทำให้พวกเขาไม่มีเวลา สิ่งนี้นำไปสู่การละเลยสุขภาพ เนื่องจากพวกเขาไม่ได้รับความเห็นที่เชื่อถือได้ โครงการนี้มีเป้าหมายเพื่อบรรเทาปัญหาที่กล่าวมาข้างต้นโดยใช้ปัญญาประดิษฐ์ในรูปแบบของเว็บไซต์ เพื่อให้เข้าถึงได้ง่ายในการช่วยวินิจฉัยปัญหาสุขภาพที่ซ่อนอยู่ซึ่งบุคคลเหล่านี้อาจไม่ทราบ",
-                processTitle: "กระบวนการ",
-                processStep1: "1. อ่านและทำความเข้าใจคำแนะนำและรายละเอียดของเว็บไซต์",
-                processStep2: "2. กดปุ่ม 'เริ่ม'",
-                processStep3: "3. ผู้ป่วยจะต้องกรอกข้อมูลตามที่ร้องขอ",
-                processStep4: "4. ตรวจสอบข้อมูลที่กรอกแล้วกดส่ง",
-                processStep5: "5. AI จะวิเคราะห์ข้อมูลที่ให้มา",
-                processStep6: "6. ผลลัพธ์จะแสดงขึ้นหลังจากที่ AI วิเคราะห์เสร็จสิ้น",
-                objectivesTitle: "วัตถุประสงค์",
-                objective1: "1. ให้การเข้าถึงการวินิจฉัยได้ง่ายขึ้น",
-                objective2: "2. เป็นทางเลือกอื่นนอกจากการไปโรงพยาบาล",
-                objective3: "3. ลดความแออัดในโรงพยาบาล",
-                objective4: "4. ป้องกันการละเลยสุขภาพ",
-                howItWorksTitle: "วิธีการทำงาน",
-                howItWorksText: "AI ทำงานโดยการนำข้อมูลที่ผู้ใช้ป้อนเข้ามาและนำไปวิเคราะห์ ข้อมูลเหล่านี้ได้แก่ อายุ, ความดันโลหิต, มวลร่างกายหลัง 1 สัปดาห์, มวลร่างกายก่อน 1 สัปดาห์, ปัสสาวะต่อวัน (มล.), ปริมาณน้ำที่ดื่มต่อวัน (มล.), เพศที่มีความเสี่ยง (ชาย/หญิง/ทั้งสอง), ความเหนื่อยล้า (ใช่/ไม่ใช่), อาการบวม (ใช่/ไม่ใช่), ความสับสน (ใช่/ไม่ใช่), เป็นหวัด (ใช่/ไม่ใช่), กระหายน้ำ (ใช่/ไม่ใช่) และอาการอื่นๆ",
-                developersTitle: "ผู้พัฒนา",
-                developersText1: "นัทธนันท์ สิงห์ทโรจน์ (นักประดิษฐ์หลักและหัวหน้าโครงการ)",
-                developersText2: "คุณุต ถาวรกพิฐัก (นักพัฒนาเว็บหลักและผู้ร่วมวิจัย)",
-                developersText3: "พอลประไท จันทรชาญ (นักวาดภาพประกอบหลักและผู้ร่วมวิจัย)",
-                footer: "© 2025 โครงการวิจัย AIDetect"
-            }
-        };
-
-        let currentLang = 'en';
-        const langToggleBtn = document.getElementById('lang-toggle');
-
-        function setLanguage(lang) {
-            const elementsToTranslate = document.querySelectorAll('[data-translate]');
-            elementsToTranslate.forEach(el => {
-                const key = el.getAttribute('data-translate');
-                if (translations[lang] && translations[lang][key]) {
-                    el.innerText = translations[lang][key];
-                }
-            });
-
-            langToggleBtn.innerText = lang === 'en' ? 'TH' : 'EN';
-            currentLang = lang;
-        }
-
-        function toggleLanguage() {
-            const newLang = currentLang === 'en' ? 'th' : 'en';
-            setLanguage(newLang);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const browserLang = navigator.language.substring(0, 2);
-            if (browserLang === 'th') {
-                setLanguage('th');
-            } else {
-                setLanguage('en');
+    };
+    
+    let currentLang = 'en';
+    const langToggleBtn = document.getElementById('lang-toggle');
+    const statusText = document.getElementById("statusText");
+    const statusLight = document.getElementById("statusLight");
+    
+    function setLanguage(lang) {
+        const elementsToTranslate = document.querySelectorAll('[data-translate]');
+        elementsToTranslate.forEach(el => {
+            const key = el.getAttribute('data-translate');
+            if (translations[lang] && translations[lang][key]) {
+                el.innerText = translations[lang][key];
             }
         });
-    </script>
+
+        // Special case for select options without data-translate
+        const genderOptions = document.querySelector('select[name="gender"]').options;
+        genderOptions[1].innerText = translations[lang].male;
+        genderOptions[2].innerText = translations[lang].female;
+
+        // Update button text to show the opposite language
+        langToggleBtn.innerText = lang === 'en' ? 'TH' : 'EN';
+        currentLang = lang;
+        
+        // Update server status text after changing language
+        checkServerStatus();
+    }
+
+    function toggleLanguage() {
+        const newLang = currentLang === 'en' ? 'th' : 'en';
+        setLanguage(newLang);
+    }
+    
+    function showModal(title, message) {
+        const modal = document.getElementById("resultModal");
+        document.getElementById("modalTitle").innerText = title;
+        document.getElementById("modalMessage").innerText = message;
+        modal.classList.add("show");
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("resultModal");
+        modal.classList.remove("show");
+    }
+
+    async function checkServerStatus() {
+        try {
+            const response = await fetch(`${API_ENDPOINT}/api/status`, { method: 'GET' });
+            const data = await response.json();
+
+            if (data.status === "online") {
+                statusText.innerText = translations[currentLang].statusOnline;
+                statusLight.style.backgroundColor = "green";
+            } else {
+                statusText.innerText = translations[currentLang].statusWaiting;
+                statusLight.style.backgroundColor = "orange";
+                setTimeout(checkServerStatus, 5000);
+            }
+        } catch (error) {
+            statusText.innerText = translations[currentLang].statusError;
+            statusLight.style.backgroundColor = "red";
+            console.error("Error fetching server status:", error);
+            setTimeout(checkServerStatus, 5000);
+        }
+    }
+    
+    async function submitForm(event) {
+        event.preventDefault();
+
+        const data62Features = {
+            "0-1": 0, "5-15": 0, "10-20": 0, "40+": 0, "45+": 0, "50+": 0, "60+": 0, "65+": 0,
+            "<500": 0, "<800": 0, "350-550": 0, "800-2000": 0, "2000-3000": 0, ">2000": 0, ">3000": 0,
+            ">=18.5": 0, ">=25": 0, "N/a": 0, "<=2700": 0, ">=3700": 0, "120/80": 0, ">130/80": 0,
+            "<130/80": 0, ">=130/80": 0, ">140/80": 0, "95-145/80": 0, "Mass": 0, "Negligible": 0,
+            "Overweight": 0, "M+/-": 0, "M+7Kg": 0, "-M+7Kg or 10Kg": 0, "M minus 1Kg": 0,
+            "M minus 5Kg": 0, "M minus 10Kg": 0, "M minus 0.5-1Kg": 0, "<M": 0, "No change": 0,
+            "Negligible.1": 0, "Male": 0, "Female": 0, "Wheezing": 0, "Headache": 0,
+            "Short Breaths": 0, "Rapid Breathing": 0, "Anxiety": 0, "Urine at Night": 0,
+            "Irritability": 0, "Blurred Vision": 0, "Slow Healing": 0, "Dry Mouth": 0,
+            "Muscle Aches": 0, "Nausea/Vomiting": 0, "Insomnia": 0, "Chest Pain": 0,
+            "Dizziness": 0, "Nosebleeds": 0, "Foamy Urine": 0, "Abdominal Pain": 0,
+            "Itchy Skin": 0, "Dark Urine": 0, "Bone Pain": 0
+        };
+
+        const selects = document.querySelectorAll('select');
+        selects.forEach(select => {
+            if (select.value && data62Features.hasOwnProperty(select.value)) {
+                data62Features[select.value] = 1;
+            }
+        });
+
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked && data62Features.hasOwnProperty(checkbox.value)) {
+                data62Features[checkbox.value] = 1;
+            }
+        });
+
+        try {
+            const response = await fetch("https://aidetect-github-io.onrender.com/predict", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data62Features)
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+            }
+
+            const result = await response.json();
+            const predictedDisease = result.prediction;
+            const message = translations[currentLang].modalMessagePrediction + predictedDisease;
+            showModal(translations[currentLang].modalTitleResult, message);
+        } catch (error) {
+            const errorMessage = translations[currentLang].modalMessageError + error.message;
+            showModal(translations[currentLang].modalTitleError, errorMessage);
+            console.error("Error during prediction:", error);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const browserLang = navigator.language.substring(0, 2);
+        if (browserLang === 'th') {
+            setLanguage('th');
+        } else {
+            setLanguage('en');
+        }
+        checkServerStatus();
+    });
+</script>
 </body>
 </html>
