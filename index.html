@@ -1,607 +1,541 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-  <title>AIDetect</title>
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f0f4f8;
-      color: #333;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIDetect</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-    header {
-      background-color: #ffffff;
-      color: #007c91;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+        }
 
-    .header-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .header-title {
+            display: flex;
+            align-items: center;
+        }
 
-    .header-title img {
-      height: 65px;
-      width: auto;
-    }
+        .header-title img {
+            height: 40px;
+            margin-right: 15px;
+        }
+        
+        .header-title h1 {
+            margin: 0;
+            color: #007c91;
+            font-size: 2em;
+        }
 
-    .header-title h1 {
-      font-size: 28px;
-      margin: 0;
-    }
+        .lang-btn {
+            font-size: 16px;
+            background-color: #007c91;
+            color: white;
+            border: 1px solid white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
 
-    .menu-btn {
-      font-size: 26px;
-      background: none;
-      border: none;
-      color: #007c91;
-      cursor: pointer;
-    }
+        .menu-btn {
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #333;
+        }
 
-    main {
-      padding: 40px 30px;
-    }
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
 
-    .main-layout {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: space-between;
-    }
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
 
-    .left-box {
-      font-size: 18px;
-      background-color: #ffffff;
-      flex: 1 1 300px;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 50px;
-      padding-bottom: 25px;
-      justify-content: center;
-      min-height: 300px;
-      position: relative;
-    }
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
 
-    .start-button {
-      width: 120px;
-      height: 50px;
-      border-radius: 8px;
-      background-color: #007c91;
-      color: white;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-top: 20px; 
-      position: relative; 
-    }
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        
+        .menu-separator {
+            height: 1px;
+            background-color: #444;
+            margin: 10px 0;
+        }
 
-    .start-button:hover {
-      background-color: #007c91;
-    }
+        .disclaimer-box {
+            background-color: #ffcccc;
+            border-left: 5px solid #ff0000;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    .banner {
-      flex: 1 1 300px;
-      position: relative;
-      border-radius: 12px;
-      overflow: hidden;
-      min-height: 300px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
+        .disclaimer-box p {
+            margin: 0;
+            font-size: 1.1em;
+            color: #d60000;
+        }
 
-    .banner-slide {
-      position: absolute;
-      top: 0;
-      left: 100%;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transition: all 0.8s ease;
-    }
+        .start-button {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 30px auto;
+            padding: 15px 25px;
+            background-color: #007c91;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+        }
 
-    .banner-slide.active {
-      left: 0;
-      opacity: 1;
-      z-index: 1;
-    }
+        .start-button:hover {
+            background-color: #005f73;
+        }
 
-    .banner-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+        .section {
+            margin-top: 40px;
+        }
 
-    .dots {
-      position: absolute;
-      bottom: 10px;
-      width: 100%;
-      text-align: center;
-      z-index: 2;
-    }
+        .section h2 {
+            color: #007c91;
+            font-size: 1.8em;
+            border-bottom: 2px solid #007c91;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+        }
 
-    .dot {
-      display: inline-block;
-      height: 8px;
-      border-radius: 4px;
-      background-color: #ccc;
-      margin: 0 4px;
-      transition: all 0.3s ease;
-      width: 8px;
-    }
+        .section h3 {
+            color: #005f73;
+            font-size: 1.4em;
+            margin-top: 20px;
+        }
 
-    .dot.active {
-      width: 24px;
-      background-color: #90dcff;
-    }
+        .section p, .section li {
+            line-height: 1.6;
+            color: #555;
+        }
 
-    .prev, .next {
-      cursor: pointer;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      padding: 10px 16px;
-      color: white;
-      font-weight: bold;
-      font-size: 20px;
-      border: none;
-      border-radius: 4px;
-      user-select: none;
-      background-color: rgba(0, 0, 0, 0.3);
-      z-index: 2;
-    }
+        .dev-list {
+            list-style-type: none;
+            padding: 0;
+        }
 
-    .prev {
-      left: 10px;
-    }
+        .dev-list li {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+            font-size: 0.9em;
+            color: #888;
+        }
 
-    .next {
-      right: 10px;
-    }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
 
-    section {
-      margin-top: 60px;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 12px;
+            text-align: center;
+            animation: slideIn 0.5s ease-out;
+        }
 
-    section h2 {
-      color: #007c91;
-    }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
-    section p {
-      line-height: 1.6;
-    }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-    footer {
-      background-color: #f1f1f1;
-      text-align: center;
-      padding: 12px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      font-size: 14px;
-    }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      right: -300px;
-      height: 100vh;
-      width: 300px;
-      background-color: #ffffff;
-      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
-      z-index: 1100;
-      transition: right 0.3s ease;
-      padding: 20px;
-      box-sizing: border-box;
-      font-size: 25px;
-    }
-
-    .sidebar.open {
-      right: 0;
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 100vw;
-      background-color: rgba(0, 0, 0, 0.5);
-      opacity: 0;
-      display: none;
-      transition: opacity 0.3s ease;
-      z-index: 1050;
-    }
-
-    .overlay.show {
-      display: block;
-      opacity: 1;
-    }
-
-    .popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.9);
-      background-color: #ffffff;
-      color: #007c91;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      z-index: 1200;
-      display: none;
-      transition: all 0.3s ease;
-      max-width: 90%;
-      width: 400px;
-    }
-
-    .popup.show {
-      display: block;
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 20px;
-      color: #007c91;
-      cursor: pointer;
-      background: none;
-      border: none;
-    }
-
-    .sidebar-button {
-      background: none;
-      border: none;
-      color: #007c91;
-      font-size: 18px;
-      padding: 10px 0;
-      text-align: left;
-      width: 100%;
-      cursor: pointer;
-    }
-
-    .privacy {
-      font-size: 12px;
-      color: #666;
-      text-align: right;
-      margin-top: 20px;
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-    }
-
-    .about-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .about-buttons button {
-      background-color: #007c91;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    @media (max-width: 768px) {
-      .main-layout {
-        flex-direction: column;
-      }
-
-      .left-box, .banner {
-        flex: 1 1 100%;
-      }
-    }
-  </style>
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
-<header>
-  <div class="header-title">
-    <img src="https://github.com/mwllix/aidetect.github.io/blob/main/logo.png?raw=true" alt="Logo" />
-    <h1>AIDetect</h1>
-  </div>
-  <button class="menu-btn" onclick="toggleMenu()">☰</button>
-</header>
-
-<main>
-  <div class="main-layout">
-    <div class="left-box">
-      <p>This website is not designed to provide a medically verified diagnosis and may have limited accuracy.
-        If you are experiencing health issues or are worried about your well-being, it is strongly recommended
-        that you consult with a licensed medical professional or a real doctor. This platform is intended solely as an additional,
-        alternative tool for general informational purposes and should not be trusted over professional medical advice, diagnosis, or treatment.</p>
-      <a class="start-button" id="startButton" href="subpage.html">Start</a>
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+        <a href="#" onclick="showAccount()" data-translate="account">Account</a>
+        <a href="#" onclick="showSettings()" data-translate="settings">Settings</a>
+        <div class="menu-separator"></div>
+        <a href="#about-us" data-translate="aboutUs">About Us</a>
+        <a href="#" onclick="showFeedback()" data-translate="feedback">Feedback</a>
+        <a href="#" onclick="showPrivacy()" data-translate="privacyPolicy">Privacy Policy</a>
     </div>
 
-    <div class="banner">
-      <div class="banner-slide active"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1024px-Cat_August_2010-4.jpg"></div>
-        <div class="banner-slide"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1024px-Cat_August_2010-4.jpg"></div>
-        <div class="banner-slide"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1024px-Cat_August_2010-4.jpg" alt="Banner 3"></div>
-        <div class="banner-slide"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1024px-Cat_August_2010-4.jpg" alt="Banner 4"></div>
-        <div class="banner-slide"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1024px-Cat_August_2010-4.jpg" alt="Banner 5"></div>
+    <div class="container">
+        <header>
+            <div class="header-title">
+                <img src="https://github.com/mwllix/aidetect.github.io/blob/main/logo.png?raw=true" alt="Logo" />
+                <h1 data-translate="headerTitle">AIDetect</h1>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <button id="lang-toggle" class="lang-btn" onclick="toggleLanguage()">TH</button>
+                <button class="menu-btn" onclick="toggleMenu()">☰</button>
+            </div>
+        </header>
 
-      <div class="dots">
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-      </div>
+        <div class="disclaimer-box">
+            <p data-translate="disclaimer">This website is not designed to provide a medically verified diagnosis and may have limited accuracy. If you are experiencing health issues or are worried about your well-being, it is strongly recommended that you consult with a licensed medical professional or a real doctor. This platform is intended solely as an additional, alternative tool for general informational purposes and should not be trusted over professional medical advice, diagnosis, or treatment.</p>
+        </div>
 
-      <button class="prev" onclick="prevSlide()">❮</button>
-      <button class="next" onclick="nextSlide()">❯</button>
+        <a class="start-button" href="subpage.html" data-translate="startButton">Start</a>
+        
+        <div class="section" id="about-us">
+            <h2 data-translate="aboutUsTitle">About Us</h2>
+            <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+                <button class="about-btn" onclick="showIntro()" data-translate="introButton">Introduction</button>
+                <button class="about-btn" onclick="showObjectives()" data-translate="objectivesButton">Objectives</button>
+                <button class="about-btn" onclick="showProcess()" data-translate="processButton">Process</button>
+                <button class="about-btn" onclick="showHowItWorks()" data-translate="howItWorksButton">How it works</button>
+                <button class="about-btn" onclick="showDevelopers()" data-translate="developersButton">Developers</button>
+            </div>
+
+            <div id="intro-content" class="about-content">
+                <h3 data-translate="introductionTitle">Introduction</h3>
+                <p data-translate="introductionText">People are hesitant to visit hospitals due to the high volume of patients who require hospital services. It is also not convenient for many people to visit hospitals. This means they cannot receive a professional diagnosis. They are either very busy or it would take too much time to go to the hospital, so they simply don’t have the time. This leads to neglect of their health, as they are not receiving a trustworthy opinion. This project aims to mitigate the problems stated above by utilizing Artificial Intelligence in the form of a website, providing easy access to assist in diagnosing any underlying health problems these individuals may not be aware of.</p>
+            </div>
+            
+            <div id="objectives-content" class="about-content" style="display: none;">
+                <h3 data-translate="objectivesTitle">Objectives</h3>
+                <ul class="dev-list">
+                    <li data-translate="objective1">1. Provide easier access to diagnosis</li>
+                    <li data-translate="objective2">2. Provide an alternative method instead of going to the hospital</li>
+                    <li data-translate="objective3">3. Reduce congestion in hospitals</li>
+                    <li data-translate="objective4">4. Prevent neglect of health</li>
+                </ul>
+            </div>
+            
+            <div id="process-content" class="about-content" style="display: none;">
+                <h3 data-translate="processTitle">Process</h3>
+                <ul class="dev-list">
+                    <li data-translate="processStep1">1. Read and go through the website’s instructions and details</li>
+                    <li data-translate="processStep2">2. Press the 'Start' button</li>
+                    <li data-translate="processStep3">3. Patients are then required to fill out the information as requested</li>
+                    <li data-translate="processStep4">4. Check the filled information and press submit</li>
+                    <li data-translate="processStep5">5. The AI will then analyze the information given</li>
+                    <li data-translate="processStep6">6. Results will be shown after the AI finishes analyzing</li>
+                </ul>
+            </div>
+            
+            <div id="howitworks-content" class="about-content" style="display: none;">
+                <h3 data-translate="howItWorksTitle">How it works</h3>
+                <p data-translate="howItWorksText">The AI works by taking the data inputted by the users and analyzing them. These data include age, blood pressure, mass after 1 week, mass before 1 week, urine per day (mL), water intake per day (mL), risk gender (Male/Female/Both), fatigue (Yes/No), edema (Yes/No), confusion (Yes/No), common cold (Yes/No), thirst (Yes/No) + other symptoms</p>
+            </div>
+            
+            <div id="developers-content" class="about-content" style="display: none;">
+                <h3 data-translate="developersTitle">Developers</h3>
+                <ul class="dev-list">
+                    <li data-translate="developersText1">Nattanan Singtoroj (Main Inventor and Project Head)</li>
+                    <li data-translate="developersText2">Khunut Thewarakphithak (Main Web-developer and Co-researcher)</li>
+                    <li data-translate="developersText3">Paulprathai Chandacham (Main Illustrator and Co-researcher)</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p data-translate="footer">&copy; 2025 AIDetect Research Project</p>
+        </footer>
     </div>
-  </div>
 
-  <div class="overlay" id="overlay" onclick="closeAll()"></div>
-
-  <div class="sidebar" id="sidebar">
-    <h2>Menu</h2>
-    <button class="sidebar-button" onclick="toggleAccount()">Account</button>
-    <button class="sidebar-button" onclick="alert('Settings not yet implemented.')">Settings</button>
-    <button class="sidebar-button" onclick="toggleAboutPopup()">About Us</button>
-    <button class="sidebar-button" onclick="toggleFeedback()">Feedback</button>
-    <button class="sidebar-button privacy" onclick="togglePrivacyPopup()">Privacy Policy</button>
-  </div>
-
-  <div class="popup" id="accountPopup">
-    <button class="close-btn" onclick="closeAll()">&times;</button>
-    <h2>ACCOUNT</h2>
-    <p>STILL IN DEVELOPMENT!!</p>
-  </div>
-
-  <div class="popup" id="feedbackPopup">
-    <button class="close-btn" onclick="closeAll()">&times;</button>
-    <h2>Feedback</h2>
-    <textarea rows="5" style="width: 100%; padding: 10px; box-sizing: border-box;"></textarea>
-    <button style="margin-top: 10px; background: #007c91; color: white; border: none; padding: 10px 20px; border-radius: 6px;">Send</button>
-  </div>
-
-  <div class="popup" id="aboutPopup">
-    <button class="close-btn" onclick="closeAll()">&times;</button>
-    <h2>About Us</h2>
-    <div class="about-buttons">
-      <button onclick="scrollToSection('introduction')">Introduction</button>
-      <button onclick="scrollToSection('objectives')">Objectives</button>
-      <button onclick="scrollToSection('process')">Process</button>
-      <button onclick="scrollToSection('how')">How it works</button>
-      <button onclick="scrollToSection('developers')">Developers</button>
+    <div id="accountModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 data-translate="accountPopup">ACCOUNT</h2>
+            <p data-translate="accountDev">STILL IN DEVELOPMENT!!</p>
+        </div>
     </div>
-  </div>
 
-  <div class="popup" id="privacyPopup">
-    <button class="close-btn" onclick="closeAll()">&times;</button>
-    <h2>Privacy Policy</h2>
-    <p>STILL IN DEVELOPMENT!!</p>
-  </div>
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 data-translate="settings">Settings</h2>
+            <p data-translate="settingsDev">STILL IN DEVELOPMENT!!</p>
+        </div>
+    </div>
 
-  <section id="about">
-    <h2 id="introduction">Introduction</h2>
-    <p>People are hesitant to visit hospitals due to the high volume of patients who require hospital services.
-      It is also not convenient for many people to visit hospitals. This means they cannot receive a professional diagnosis.
-      They are either very busy or it would take too much time to go to the hospital, so they simply don’t have the time.
-      This leads to neglect of their health, as they are not receiving a trustworthy opinion. This project aims to mitigate the problems
-      stated above by utilizing Artificial Intelligence in the form of a website, providing easy access to assist in diagnosing any underlying
-      health problems these individuals may not be aware of.
-    </p>
+    <div id="feedbackModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 data-translate="feedbackTitle">Feedback</h2>
+            <p>
+                <textarea rows="5" style="width: 100%;"></textarea>
+                <button data-translate="sendButton">Send</button>
+            </p>
+        </div>
+    </div>
 
-    <h2 id="process">Process</h2>
-    <p>1. Read and go through the website’s instructions and details</p>
-    <p>2. Press the "Start" button</p>
-    <p>3. Patients are then required to fill out the information as requested</p>
-    <p>4. Check the filled information and press submit</p>
-    <p>5. The AI will then analyze the information given</p>
-    <p>6. Results will be shown after the AI finishes analyzing</p>
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 data-translate="privacyTitle">Privacy Policy</h2>
+            <p data-translate="privacyDev">STILL IN DEVELOPMENT!!</p>
+        </div>
+    </div>
 
-    <h2 id="objectives">Objectives</h2>
-    <p>1. Provide easier access to diagnosis</p>
-    <p>2. Provide an alternative method instead of going to the hospital</p>
-    <p>3. Reduce congestion in hospitals</p>
-    <p>4. Prevent neglect of health</p>
+    <script>
+        // About Us section buttons
+        function showIntro() { showAboutContent('intro-content'); }
+        function showObjectives() { showAboutContent('objectives-content'); }
+        function showProcess() { showAboutContent('process-content'); }
+        function showHowItWorks() { showAboutContent('howitworks-content'); }
+        function showDevelopers() { showAboutContent('developers-content'); }
 
-    <h2 id="how">How it works</h2>
-    <p>The AI works by taking the data inputted by the users and analyzing them.
-      These data include age, blood pressure, mass after 1 week, mass before 1 week,
-      urine per day (mL), water intake per day (mL), risk gender (Male/Female/Both), fatigue (Yes/No),
-      edema (Yes/No), confusion (Yes/No), common cold (Yes/No), thirst (Yes/No) + other symptoms</p>
-
-    <h2 id="developers">Developers</h2>
-    <p>Nattanan Singtoroj (Main Inventor and Project Head)</p>
-    <p>Khunut Thewarakphithak (Main Web-developer and Co-researcher)</p>
-    <p>Paulprathai Chandacham (Main Illustrator and Co-researcher)</p>
-  </section>
-</main>
-
-<footer>
-  &copy; 2025 AIDetect Research Project
-</footer>
-
-<div id="statusIndicator" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: none; background-color: white; padding: 8px 12px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-  <span id="statusText" style="color: #333; margin-right: 10px;">Waking up server...</span>
-  <span id="statusLight" style="width: 15px; height: 15px; border-radius: 50%; background-color: gray; display: inline-block;"></span>
-</div>
-
-<script>
-  let slideIndex = 0;
-  const slides = document.querySelectorAll('.banner-slide');
-  const dots = document.querySelectorAll('.dot');
-
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.remove('active');
-      dots[i].classList.remove('active');
-    });
-    slides[index].classList.add('active');
-    dots[index].classList.add('active');
-  }
-
-  function nextSlide() {
-    slideIndex = (slideIndex + 1) % slides.length;
-    showSlide(slideIndex);
-  }
-
-  function prevSlide() {
-    slideIndex = (slideIndex - 1 + slides.length) % slides.length;
-    showSlide(slideIndex);
-  }
-
-  setInterval(nextSlide, 4000);
-
-  const sidebar = document.getElementById("sidebar");
-  const overlay = document.getElementById("overlay");
-  const popup = document.getElementById("accountPopup");
-  const privacyPopup = document.getElementById("privacyPopup");
-  const feedbackPopup = document.getElementById("feedbackPopup");
-  const aboutPopup = document.getElementById("aboutPopup");
-
-  function toggleMenu() {
-    if (sidebar.classList.contains("open")) {
-      closeAll();
-    } else {
-      sidebar.classList.add("open");
-      showOverlay();
-    }
-  }
-
-  function togglePrivacyPopup() {
-    privacyPopup.classList.add("show");
-    showOverlay();
-  }
-
-  function toggleAccount() {
-    popup.classList.add("show");
-    showOverlay();
-  }
-
-  function toggleFeedback() {
-    feedbackPopup.classList.add("show");
-    showOverlay();
-  }
-
-  function toggleAboutPopup() {
-    aboutPopup.classList.add("show");
-    showOverlay();
-  }
-
-  function scrollToSection(id) {
-    closeAll();
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-  }
-
-  function showOverlay() {
-    overlay.style.display = "block";
-    requestAnimationFrame(() => {
-      overlay.classList.add("show");
-    });
-  }
-
-  function closeAll() {
-    sidebar.classList.remove("open");
-    popup.classList.remove("show");
-    feedbackPopup.classList.remove("show");
-    aboutPopup.classList.remove("show");
-    privacyPopup.classList.remove("show");
-    overlay.classList.remove("show");
-    overlay.addEventListener("transitionend", () => {
-      if (!overlay.classList.contains("show")) {
-        overlay.style.display = "none";
-      }
-    }, { once: true });
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const startButton = document.getElementById('startButton');
-    const statusIndicator = document.getElementById('statusIndicator');
-    const statusText = document.getElementById('statusText');
-    const statusLight = document.getElementById('statusLight');
-    const API_ENDPOINT = 'https://aidetect-github-io.onrender.com';
-
-    statusIndicator.style.display = 'flex';
-    startButton.style.display = 'none';
-
-    async function wakeUpServer() {
-      statusText.innerText = 'Waking up server...';
-      statusLight.style.backgroundColor = 'gray';
-
-      try {
-        const response = await fetch(`${API_ENDPOINT}/api/wakeup`, { method: 'GET' });
-        if (response.ok) {
-          setTimeout(checkServerStatus, 5000);
-        } else {
-          statusText.innerText = 'Error waking up the server';
-          statusLight.style.backgroundColor = 'red';
+        function showAboutContent(id) {
+            const contents = document.querySelectorAll('.about-content');
+            contents.forEach(content => {
+                content.style.display = 'none';
+            });
+            document.getElementById(id).style.display = 'block';
         }
-      } catch (error) {
-        statusText.innerText = 'Unable to connect';
-        statusLight.style.backgroundColor = 'red';
-        console.error('Error sending wake-up command:', error);
-      }
-    }
 
-    async function checkServerStatus() {
-      try {
-        const response = await fetch(`${API_ENDPOINT}/api/status`, { method: 'GET' });
-        const data = await response.json();
-
-        if (data.status === 'online') {
-          statusText.innerText = 'Online';
-          statusLight.style.backgroundColor = 'green';
-          startButton.style.display = 'flex';
-        } else {
-          statusText.innerText = 'Waiting for server...';
-          setTimeout(checkServerStatus, 5000);
+        // Side menu functions
+        function toggleMenu() {
+            const sidebar = document.getElementById("mySidebar");
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+            } else {
+                sidebar.style.width = "250px";
+            }
         }
-      } catch (error) {
-        statusText.innerText = 'Waiting for server...';
-        setTimeout(checkServerStatus, 5000);
-        console.error('Error fetching server status:', error);
-      }
-    }
+        function closeMenu() {
+            document.getElementById("mySidebar").style.width = "0";
+        }
 
-    wakeUpServer();
-  });
-</script>
+        // Modal functions
+        let currentModal;
+        function showModal(id) {
+            closeMenu();
+            currentModal = document.getElementById(id);
+            currentModal.style.display = "block";
+        }
+        function closeModal() {
+            if (currentModal) {
+                currentModal.style.display = "none";
+            }
+        }
+        window.onclick = function(event) {
+            if (event.target === currentModal) {
+                closeModal();
+            }
+        };
 
+        function showAccount() { showModal('accountModal'); }
+        function showSettings() { showModal('settingsModal'); }
+        function showFeedback() { showModal('feedbackModal'); }
+        function showPrivacy() { showModal('privacyModal'); }
+
+        // Language toggle functions
+        const translations = {
+            en: {
+                headerTitle: "AIDetect",
+                disclaimer: "This website is not designed to provide a medically verified diagnosis and may have limited accuracy. If you are experiencing health issues or are worried about your well-being, it is strongly recommended that you consult with a licensed medical professional or a real doctor. This platform is intended solely as an additional, alternative tool for general informational purposes and should not be trusted over professional medical advice, diagnosis, or treatment.",
+                startButton: "Start",
+                account: "Account",
+                settings: "Settings",
+                aboutUs: "About Us",
+                feedback: "Feedback",
+                privacyPolicy: "Privacy Policy",
+                accountPopup: "ACCOUNT",
+                accountDev: "STILL IN DEVELOPMENT!!",
+                settingsDev: "STILL IN DEVELOPMENT!!",
+                feedbackTitle: "Feedback",
+                sendButton: "Send",
+                aboutUsTitle: "About Us",
+                introButton: "Introduction",
+                objectivesButton: "Objectives",
+                processButton: "Process",
+                howItWorksButton: "How it works",
+                developersButton: "Developers",
+                privacyTitle: "Privacy Policy",
+                privacyDev: "STILL IN DEVELOPMENT!!",
+                introductionTitle: "Introduction",
+                introductionText: "People are hesitant to visit hospitals due to the high volume of patients who require hospital services. It is also not convenient for many people to visit hospitals. This means they cannot receive a professional diagnosis. They are either very busy or it would take too much time to go to the hospital, so they simply don’t have the time. This leads to neglect of their health, as they are not receiving a trustworthy opinion. This project aims to mitigate the problems stated above by utilizing Artificial Intelligence in the form of a website, providing easy access to assist in diagnosing any underlying health problems these individuals may not be aware of.",
+                processTitle: "Process",
+                processStep1: "1. Read and go through the website’s instructions and details",
+                processStep2: "2. Press the 'Start' button",
+                processStep3: "3. Patients are then required to fill out the information as requested",
+                processStep4: "4. Check the filled information and press submit",
+                processStep5: "5. The AI will then analyze the information given",
+                processStep6: "6. Results will be shown after the AI finishes analyzing",
+                objectivesTitle: "Objectives",
+                objective1: "1. Provide easier access to diagnosis",
+                objective2: "2. Provide an alternative method instead of going to the hospital",
+                objective3: "3. Reduce congestion in hospitals",
+                objective4: "4. Prevent neglect of health",
+                howItWorksTitle: "How it works",
+                howItWorksText: "The AI works by taking the data inputted by the users and analyzing them. These data include age, blood pressure, mass after 1 week, mass before 1 week, urine per day (mL), water intake per day (mL), risk gender (Male/Female/Both), fatigue (Yes/No), edema (Yes/No), confusion (Yes/No), common cold (Yes/No), thirst (Yes/No) + other symptoms",
+                developersTitle: "Developers",
+                developersText1: "Nattanan Singtoroj (Main Inventor and Project Head)",
+                developersText2: "Khunut Thewarakphithak (Main Web-developer and Co-researcher)",
+                developersText3: "Paulprathai Chandacham (Main Illustrator and Co-researcher)",
+                footer: "© 2025 AIDetect Research Project"
+            },
+            th: {
+                headerTitle: "AIDetect",
+                disclaimer: "เว็บไซต์นี้ไม่ได้ถูกออกแบบมาเพื่อใช้ในการวินิจฉัยทางการแพทย์ และอาจมีความแม่นยำจำกัด หากคุณกำลังประสบปัญหาด้านสุขภาพหรือเป็นกังวลเกี่ยวกับความเป็นอยู่ที่ดีของคุณ ขอแนะนำอย่างยิ่งให้ปรึกษาผู้เชี่ยวชาญทางการแพทย์ที่มีใบอนุญาตหรือแพทย์จริง แพลตฟอร์มนี้มีวัตถุประสงค์เพื่อใช้เป็นเครื่องมือเพิ่มเติมสำหรับข้อมูลทั่วไปเท่านั้น และไม่ควรเชื่อถือเหนือคำแนะนำ การวินิจฉัย หรือการรักษาทางการแพทย์จากผู้เชี่ยวชาญ",
+                startButton: "เริ่ม",
+                account: "บัญชี",
+                settings: "ตั้งค่า",
+                aboutUs: "เกี่ยวกับเรา",
+                feedback: "ข้อเสนอแนะ",
+                privacyPolicy: "นโยบายความเป็นส่วนตัว",
+                accountPopup: "บัญชี",
+                accountDev: "ยังอยู่ระหว่างการพัฒนา!!",
+                settingsDev: "ยังอยู่ระหว่างการพัฒนา!!",
+                feedbackTitle: "ข้อเสนอแนะ",
+                sendButton: "ส่ง",
+                aboutUsTitle: "เกี่ยวกับเรา",
+                introButton: "บทนำ",
+                objectivesButton: "วัตถุประสงค์",
+                processButton: "กระบวนการ",
+                howItWorksButton: "วิธีการทำงาน",
+                developersButton: "ผู้พัฒนา",
+                privacyTitle: "นโยบายความเป็นส่วนตัว",
+                privacyDev: "ยังอยู่ระหว่างการพัฒนา!!",
+                introductionTitle: "บทนำ",
+                introductionText: "ผู้คนไม่กล้าไปโรงพยาบาลเนื่องจากมีผู้ป่วยจำนวนมากที่ต้องการบริการจากโรงพยาบาล นอกจากนี้ยังไม่สะดวกสำหรับหลายๆ คนที่จะไปโรงพยาบาล นั่นหมายความว่าพวกเขาไม่ได้รับการวินิจฉัยจากมืออาชีพ พวกเขาอาจจะยุ่งเกินไปหรือใช้เวลามากเกินไปในการไปโรงพยาบาล ทำให้พวกเขาไม่มีเวลา สิ่งนี้นำไปสู่การละเลยสุขภาพ เนื่องจากพวกเขาไม่ได้รับความเห็นที่เชื่อถือได้ โครงการนี้มีเป้าหมายเพื่อบรรเทาปัญหาที่กล่าวมาข้างต้นโดยใช้ปัญญาประดิษฐ์ในรูปแบบของเว็บไซต์ เพื่อให้เข้าถึงได้ง่ายในการช่วยวินิจฉัยปัญหาสุขภาพที่ซ่อนอยู่ซึ่งบุคคลเหล่านี้อาจไม่ทราบ",
+                processTitle: "กระบวนการ",
+                processStep1: "1. อ่านและทำความเข้าใจคำแนะนำและรายละเอียดของเว็บไซต์",
+                processStep2: "2. กดปุ่ม 'เริ่ม'",
+                processStep3: "3. ผู้ป่วยจะต้องกรอกข้อมูลตามที่ร้องขอ",
+                processStep4: "4. ตรวจสอบข้อมูลที่กรอกแล้วกดส่ง",
+                processStep5: "5. AI จะวิเคราะห์ข้อมูลที่ให้มา",
+                processStep6: "6. ผลลัพธ์จะแสดงขึ้นหลังจากที่ AI วิเคราะห์เสร็จสิ้น",
+                objectivesTitle: "วัตถุประสงค์",
+                objective1: "1. ให้การเข้าถึงการวินิจฉัยได้ง่ายขึ้น",
+                objective2: "2. เป็นทางเลือกอื่นนอกจากการไปโรงพยาบาล",
+                objective3: "3. ลดความแออัดในโรงพยาบาล",
+                objective4: "4. ป้องกันการละเลยสุขภาพ",
+                howItWorksTitle: "วิธีการทำงาน",
+                howItWorksText: "AI ทำงานโดยการนำข้อมูลที่ผู้ใช้ป้อนเข้ามาและนำไปวิเคราะห์ ข้อมูลเหล่านี้ได้แก่ อายุ, ความดันโลหิต, มวลร่างกายหลัง 1 สัปดาห์, มวลร่างกายก่อน 1 สัปดาห์, ปัสสาวะต่อวัน (มล.), ปริมาณน้ำที่ดื่มต่อวัน (มล.), เพศที่มีความเสี่ยง (ชาย/หญิง/ทั้งสอง), ความเหนื่อยล้า (ใช่/ไม่ใช่), อาการบวม (ใช่/ไม่ใช่), ความสับสน (ใช่/ไม่ใช่), เป็นหวัด (ใช่/ไม่ใช่), กระหายน้ำ (ใช่/ไม่ใช่) และอาการอื่นๆ",
+                developersTitle: "ผู้พัฒนา",
+                developersText1: "นัทธนันท์ สิงห์ทโรจน์ (นักประดิษฐ์หลักและหัวหน้าโครงการ)",
+                developersText2: "คุณุต ถาวรกพิฐัก (นักพัฒนาเว็บหลักและผู้ร่วมวิจัย)",
+                developersText3: "พอลประไท จันทรชาญ (นักวาดภาพประกอบหลักและผู้ร่วมวิจัย)",
+                footer: "© 2025 โครงการวิจัย AIDetect"
+            }
+        };
+
+        let currentLang = 'en';
+        const langToggleBtn = document.getElementById('lang-toggle');
+
+        function setLanguage(lang) {
+            const elementsToTranslate = document.querySelectorAll('[data-translate]');
+            elementsToTranslate.forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+
+            langToggleBtn.innerText = lang === 'en' ? 'TH' : 'EN';
+            currentLang = lang;
+        }
+
+        function toggleLanguage() {
+            const newLang = currentLang === 'en' ? 'th' : 'en';
+            setLanguage(newLang);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const browserLang = navigator.language.substring(0, 2);
+            if (browserLang === 'th') {
+                setLanguage('th');
+            } else {
+                setLanguage('en');
+            }
+        });
+    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
