@@ -14,7 +14,7 @@
       padding: 0;
       overflow-x: hidden;
     }
-
+    
     header {
       background-color: #ffffff;
       color: #007c91;
@@ -47,6 +47,16 @@
       border: none;
       color: #007c91;
       cursor: pointer;
+    }
+     .lang-btn {
+        font-size: 16px;
+        background-color: #007c91;
+        color: white;
+        border: 1px solid white;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-right: 10px;
     }
 
     main {
@@ -328,6 +338,7 @@
     <img src="https://github.com/mwllix/aidetect.github.io/blob/main/logo.png?raw=true" alt="Logo" />
     <h1>AIDetect</h1>
   </div>
+  <button id="lang-toggle" class="lang-btn" onclick="toggleLanguage()">TH</button>
   <button class="menu-btn" onclick="toggleMenu()">☰</button>
 </header>
 
