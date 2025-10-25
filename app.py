@@ -2,6 +2,7 @@ import joblib
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import numpy as np
+import logging # เพิ่ม logging เพื่อจัดการข้อความเตือน
 
 # --------------------
 # 1. การตั้งค่าและโหลดโมเดล
@@ -9,7 +10,10 @@ import numpy as np
 
 app = Flask(__name__)
 # อนุญาตให้ Frontend (React) เรียกใช้ API ข้ามโดเมนได้
-CORS(app) 
+CORS(app)
+
+# ตั้งค่า Logger
+app.logger.setLevel(logging.INFO)
 
 model = None
 le = None # Label Encoder for converting numeric prediction to disease name
@@ -21,18 +25,17 @@ try:
     # โหลด Label Encoder สำหรับแปลงผลลัพธ์ตัวเลขกลับเป็นชื่อโรค
     le = joblib.load('label_encoder.pkl')
     
-    # ดึงรายชื่อคลาสที่โมเดลรู้จักจาก Label Encoder หรือโมเดล
-    # (สมมติว่า le.classes_ เก็บชื่อโรค เช่น ['Diabetes', 'Kidney Failure', 'Normal'])
+    # ดึงรายชื่อคลาสที่โมเดลรู้จักจาก Label Encoder
     if hasattr(le, 'classes_'):
         MODEL_CLASSES = le.classes_.tolist()
     elif hasattr(model, 'classes_'):
         MODEL_CLASSES = model.classes_.tolist()
     
-    print("AI Model (svc.pkl) and Label Encoder loaded successfully.")
-    print(f"Known Classes: {MODEL_CLASSES}")
+    app.logger.info("AI Model (svc.pkl) and Label Encoder loaded successfully.")
+    app.logger.info(f"Known Classes: {MODEL_CLASSES}")
     
 except Exception as e:
-    print(f"Error loading model or label encoder: {e}")
+    app.logger.error(f"Error loading model or label encoder: {e}")
     model = None
     le = None
 
@@ -51,7 +54,21 @@ FEATURE_NAMES_62 = [
 ]
 
 # --------------------
-# 2. API Endpoint สำหรับการทำนาย (ส่วนที่ปรับปรุง)
+# 2. API Endpoint สำหรับหน้าแรก (แก้ไข 404 Error)
+# --------------------
+@app.route('/', methods=['GET'])
+def home():
+    """จัดการ Request GET ไปยัง URL หลักเพื่อป้องกัน 404 Error"""
+    # เพื่อให้เบราว์เซอร์ไม่แสดงข้อผิดพลาด "Not Found" เมื่อผู้ใช้เข้าสู่ URL หลัก
+    return jsonify({
+        "message": "AI Detection API Server is running.",
+        "status": "online",
+        "instructions": "Use the /predict endpoint with a POST request and JSON body to get a prediction."
+    }), 200
+
+
+# --------------------
+# 3. API Endpoint สำหรับการทำนาย
 # --------------------
 
 @app.route('/predict', methods=['POST'])
@@ -62,23 +79,22 @@ def predict():
     try:
         data = request.get_json()
         
-        # 2.1 เตรียมข้อมูล Feature Vector (62-dimensional array)
+        # 3.1 เตรียมข้อมูล Feature Vector (62-dimensional array)
         feature_vector = [data.get(name, 0) for name in FEATURE_NAMES_62]
         X = np.array(feature_vector).reshape(1, -1)
         
-        # 2.2 ทำนายผลลัพธ์ (ผลลัพธ์จะเป็นตัวเลข)
-        # SVC.predict() จะคืนค่าเป็นตัวเลข (เช่น 0, 1, 2)
+        # 3.2 ทำนายผลลัพธ์ (ผลลัพธ์จะเป็นตัวเลข)
         prediction_numeric = model.predict(X) 
         
-        # 2.3 แปลงผลลัพธ์ตัวเลขกลับเป็นชื่อโรค
+        # 3.3 แปลงผลลัพธ์ตัวเลขกลับเป็นชื่อโรค
         prediction_class = le.inverse_transform(prediction_numeric)[0]
         
         confidence_score = 0.0
         
-        # 2.4 คำนวณความน่าจะเป็น (Confidence Score)
+        # 3.4 คำนวณความน่าจะเป็น (Confidence Score)
         try:
             # ⭐️ วิธีที่ 1: ใช้ .predict_proba() (ถ้าโมเดลถูกฝึกด้วย probability=True)
-            probabilities = model.predict_proba(X)[0] 
+            probabilities = model.predict_proba(X)[0]
             
             # หา index ของคลาสที่ทำนายได้จากผลลัพธ์ตัวเลข
             prediction_index = prediction_numeric[0]
@@ -86,19 +102,10 @@ def predict():
             
         except AttributeError:
             # ⭐️ วิธีที่ 2: ถ้า .predict_proba() ไม่พร้อมใช้งาน (SVC ทั่วไป)
-            # เราใช้ .predict() และตั้งค่าความมั่นใจเป็น 1.0 (100%) 
-            # หรือใช้ decision_function เพื่อหาค่าความมั่นใจสัมพัทธ์
-            
-            # หากต้องการใช้ 100%
             confidence_score = 1.0 
-            
-            # หากต้องการใช้ decision_function (ซับซ้อนกว่า แต่ให้ค่าความมั่นใจสัมพัทธ์)
-            # decision = model.decision_function(X)[0]
-            # confidence_score = np.max(decision) / (np.sum(np.abs(decision))) # เป็นค่าสัมพัทธ์ ไม่ใช่ probability แท้จริง
-
             app.logger.warning("SVC model does not support predict_proba. Using default confidence score.")
 
-        # 2.5 ส่งผลลัพธ์กลับไปยัง Frontend
+        # 3.5 ส่งผลลัพธ์กลับไปยัง Frontend
         return jsonify({
             "prediction": str(prediction_class),
             "probability": float(confidence_score) 
@@ -109,14 +116,11 @@ def predict():
         return jsonify({"error": f"An error occurred during prediction: {str(e)}"}), 500
 
 # --------------------
-# 3. API Endpoint สำหรับตรวจสอบสถานะ
+# 4. API Endpoint สำหรับตรวจสอบสถานะ (Health Check)
 # --------------------
 
 @app.route('/api/status', methods=['GET'])
 def get_status():
+    """Endpoint สำหรับ Health Check หรือตรวจสอบสถานะโมเดล"""
     status = "online" if model and le else "offline (Model or Encoder Error)"
-    return jsonify({"status": status})
-
-if __name__ == '__main__':
-    # รันเซิร์ฟเวอร์
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    return jsonify({"status": status, "model_loaded": bool(model), "encoder_loaded": bool(le)})
