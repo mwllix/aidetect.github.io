@@ -2,7 +2,8 @@ import joblib
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import numpy as np
-import logging # เพิ่ม logging เพื่อจัดการข้อความเตือน
+import logging
+import os # ต้อง import os เพื่อดึงค่า PORT
 
 # --------------------
 # 1. การตั้งค่าและโหลดโมเดล
@@ -13,7 +14,8 @@ app = Flask(__name__)
 CORS(app)
 
 # ตั้งค่า Logger
-app.logger.setLevel(logging.INFO)
+# ตั้งค่า Logging Handler ให้แสดงข้อความใน Console ซึ่งจำเป็นสำหรับ Deployment Log
+logging.basicConfig(level=logging.INFO)
 
 model = None
 le = None # Label Encoder for converting numeric prediction to disease name
@@ -98,12 +100,24 @@ def predict():
             
             # หา index ของคลาสที่ทำนายได้จากผลลัพธ์ตัวเลข
             prediction_index = prediction_numeric[0]
-            confidence_score = probabilities[prediction_index]
+            # แปลง index ของคลาสที่ทำนายได้ไปเป็น index ในอาร์เรย์ของ probabilities
+            # ต้องหา index ที่ตรงกับชื่อคลาสใน le.classes_
+            
+            # ค้นหา index ของคลาสที่ทำนายได้ใน classes_ ที่มีอยู่จริงของโมเดล
+            class_name = le.inverse_transform(prediction_numeric)[0]
+            try:
+                # ต้องหา index ใน model.classes_ (ซึ่งเรียงลำดับแตกต่างกันได้)
+                # วิธีนี้ปลอดภัยกว่าการใช้ prediction_numeric[0] ตรงๆ
+                class_index_in_proba = list(model.classes_).index(prediction_numeric[0])
+                confidence_score = probabilities[class_index_in_proba]
+            except ValueError:
+                 # กรณีที่การ mapping index ล้มเหลว ให้ใช้ค่าเริ่มต้น
+                 confidence_score = 1.0
             
         except AttributeError:
             # ⭐️ วิธีที่ 2: ถ้า .predict_proba() ไม่พร้อมใช้งาน (SVC ทั่วไป)
             confidence_score = 1.0 
-            app.logger.warning("SVC model does not support predict_proba. Using default confidence score.")
+            app.logger.warning("SVC model does not support predict_proba. Using default confidence score (1.0).")
 
         # 3.5 ส่งผลลัพธ์กลับไปยัง Frontend
         return jsonify({
@@ -123,4 +137,19 @@ def predict():
 def get_status():
     """Endpoint สำหรับ Health Check หรือตรวจสอบสถานะโมเดล"""
     status = "online" if model and le else "offline (Model or Encoder Error)"
-    return jsonify({"status": status, "model_loaded": bool(model), "encoder_loaded": bool(le)})
+    return jsonify({"status": status, "model_loaded": bool(model), "encoder_loaded": bool(le), "known_classes": MODEL_CLASSES})
+
+# --------------------
+# 5. การเริ่มต้น Server (ส่วนที่ขาดหายไป)
+# --------------------
+
+if __name__ == '__main__':
+    # การตั้งค่าพอร์ตและโฮสต์สำหรับ Deployment
+    # host='0.0.0.0' เพื่อให้ Server รับฟังได้จากทุก IP (สำคัญสำหรับ Render)
+    # port ดึงมาจาก Environment Variable ชื่อ PORT (สำคัญสำหรับ Render)
+    port = int(os.environ.get("PORT", 5000)) 
+    
+    app.run(host='0.0.0.0', port=port)
+
+# **คำแนะนำ:** สำหรับ Production Deployment บน Render 
+# ให้ใช้ Gunicorn รันแอปพลิเคชันแทนการเรียกใช้ไฟล์โดยตรง (ดูคำแนะนำด้านล่าง)
