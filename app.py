@@ -133,12 +133,14 @@ def predict():
 # 4. API Endpoint สำหรับตรวจสอบสถานะ (Health Check)
 # --------------------
 
-@app.route('/api/status', methods=['GET'])
-def get_status():
-    """Endpoint สำหรับ Health Check หรือตรวจสอบสถานะโมเดล"""
-    status = "online" if model and le else "offline (Model or Encoder Error)"
-    return jsonify({"status": status, "model_loaded": bool(model), "encoder_loaded": bool(le), "known_classes": MODEL_CLASSES})
-
+@app.route('/api/wakeup', methods=['GET'])
+def wakeup_server():
+    """ใช้สำหรับปลุกเซิร์ฟเวอร์ Render ที่ Sleep อยู่"""
+    app.logger.info("Received wake-up request from frontend.")
+    return jsonify({
+        "message": "Server is waking up.",
+        "status": "initializing"
+    }), 200
 # --------------------
 # 5. การเริ่มต้น Server (ส่วนที่ขาดหายไป)
 # --------------------
