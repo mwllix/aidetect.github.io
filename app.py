@@ -146,12 +146,9 @@ def wakeup_server():
 # --------------------
 
 if __name__ == '__main__':
-    # การตั้งค่าพอร์ตและโฮสต์สำหรับ Deployment
-    # host='0.0.0.0' เพื่อให้ Server รับฟังได้จากทุก IP (สำคัญสำหรับ Render)
-    # port ดึงมาจาก Environment Variable ชื่อ PORT (สำคัญสำหรับ Render)
-    port = int(os.environ.get("PORT", 5000)) 
+    print("\nRegistered routes:")
+    for rule in app.url_map.iter_rules():
+        print(f"  {rule}")
     
+    port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
-
-# **คำแนะนำ:** สำหรับ Production Deployment บน Render 
-# ให้ใช้ Gunicorn รันแอปพลิเคชันแทนการเรียกใช้ไฟล์โดยตรง (ดูคำแนะนำด้านล่าง)
