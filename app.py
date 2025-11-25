@@ -21,6 +21,9 @@ le = None # Label Encoder
 MODEL_CLASSES = []
 MODEL_LOADED = False # สถานะสำหรับการตรวจสอบโมเดล
 
+# 🎯 เพิ่ม: กำหนดเกณฑ์ความมั่นใจ (CONFIDENCE_THRESHOLD)
+CONFIDENCE_THRESHOLD = 0.50 # 50%
+
 try:
     # โหลดโมเดล SVC และ Label Encoder (สมมติว่าไฟล์อยู่ใน Path ที่ถูกต้อง)
     model = joblib.load('svc.pkl')
@@ -83,29 +86,32 @@ def predict():
         feature_vector = [data.get(name, 0) for name in FEATURE_NAMES_62]
         X = np.array(feature_vector).reshape(1, -1)
         
-        # 3.2 ทำนายผลลัพธ์ (ผลลัพธ์จะเป็นตัวเลข)
-        prediction_numeric = model.predict(X) 
+        # 3.2 ทำนายความน่าจะเป็นของทุกคลาส
+        probas = model.predict_proba(X)[0] 
         
-        # 3.3 แปลงผลลัพธ์ตัวเลขกลับเป็นชื่อโรค
-        prediction_class = le.inverse_transform(prediction_numeric)[0]
+        # 3.3 หาความน่าจะเป็นสูงสุด (Confidence Score) และดัชนีคลาสที่ทำนาย
+        max_proba = np.max(probas)
+        predicted_class_index = np.argmax(probas)
         
-        confidence_score = 1.0 
+        # 3.4 แปลงดัชนีเป็นชื่อโรคที่โมเดลมั่นใจที่สุด (Best Candidate)
+        predicted_disease = le.inverse_transform([model.classes_[predicted_class_index]])[0]
         
-        # 3.4 คำนวณความน่าจะเป็น (Confidence Score)
-        try:
-            probabilities = model.predict_proba(X)[0]
-            pred_num_val = prediction_numeric[0] 
-            
-            # การค้นหา index ใน model.classes_ 
-            class_index_in_proba = list(model.classes_).index(pred_num_val)
-            confidence_score = probabilities[class_index_in_proba]
-            
-        except (AttributeError, ValueError):
-            app.logger.warning("Model does not support predict_proba or index mapping failed. Using default confidence score (1.0).")
+        # -----------------------------------------------------------
+        # 🎯 โค้ดที่เพิ่ม: ตรวจสอบเกณฑ์ Confidence Threshold (50%)
+        # -----------------------------------------------------------
+        if max_proba < CONFIDENCE_THRESHOLD:
+            final_prediction = "No Matching Disease"
+            confidence_score = max_proba
+        else:
+            final_prediction = predicted_disease
+            confidence_score = max_proba
 
         # 3.5 ส่งผลลัพธ์กลับไปยัง Frontend
+        app.logger.info(f"Prediction: {final_prediction}, Confidence: {confidence_score*100:.2f}%")
         return jsonify({
-            "prediction": str(prediction_class),
+            # ส่งผลลัพธ์สุดท้าย (เป็นชื่อโรค หรือ "No Matching Disease")
+            "prediction": str(final_prediction), 
+            # ส่งคะแนนความมั่นใจสูงสุด
             "probability": float(confidence_score) 
         })
 
@@ -146,6 +152,6 @@ if __name__ == '__main__':
     print("\nRegistered routes:")
     for rule in app.url_map.iter_rules():
         print(f"  {rule}")
-    
+        
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
